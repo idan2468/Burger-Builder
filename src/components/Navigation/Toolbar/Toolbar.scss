@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  position: fixed;
+  height: 4rem;
+  z-index: 500;
+  background: linear-gradient(to right, #f0f4c3, #dce775);
+  color: #651fff;
+  font:inherit;
+  font-weight: bold;
+  top: 0;
+  left: 0;
+}
+
+.toggleSlideShow{
+
+}
+
+@media (min-width: 500px) {
+  .container{
+    justify-content: space-between;
+  }
+  .toggleSlideShow{
+    display: none;
+  }
+}

@@ -1,0 +1,22 @@
+.priceLabel{
+  margin: 0 0 3rem;
+  padding: 0;
+  text-align: center;
+  font: inherit;
+  font-size: 3rem;
+  font-style: italic;
+}
+
+.btnOrder{
+  display: block;
+  font-size: 1rem;
+  margin: auto;
+  font-style: italic;
+}
+
+.buildcontrollerContainer{
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}

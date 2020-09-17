@@ -1,0 +1,70 @@
+.container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container ul {
+  align-self: flex-start;
+}
+
+.liElement {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 6rem;
+}
+
+.dotDiv {
+  display: flex;
+}
+
+.okBtn {
+  background: rgba(33, 139, 36, 1);
+  color: white;
+  font: inherit;
+  padding: .5rem;
+  margin: 1rem;
+  cursor: pointer;
+}
+
+.okBtn:hover,
+.okBtn:active {
+  background: rgba(33, 139, 36, 0.7);
+}
+
+.cancelBtn {
+  background: rgba(177, 34, 34, 1);
+  color: white;
+  font: inherit;
+  padding: .5rem;
+  margin: 1rem;
+  cursor: pointer;
+}
+
+.buttonsArea {
+  //margin: auto;
+  width: max-content;
+}
+
+.cancelBtn:hover,
+.cancelBtn:active {
+  background: rgba(177, 34, 34, 0.7);
+}
+
+.dotDiv:before {
+  content: '\2022';
+  color: #228c1d;
+  font: inherit;
+  font-size: 1.5rem;
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 550px) {
+  .container ul {
+    align-self: center;
+    padding: 0;
+  }
+}

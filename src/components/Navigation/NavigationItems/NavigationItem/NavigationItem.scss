@@ -1,0 +1,21 @@
+.link {
+  padding: 0.5rem 0.5rem 1rem;
+  margin: 1rem;
+  cursor: pointer;
+  border-bottom: 5px transparent solid;
+  border-radius: 3px;
+  text-decoration: none;
+}
+
+.link:last-child {
+  margin-right: 0;
+}
+
+.link:hover,
+.link:active,
+.linkActive {
+  opacity: 0.7;
+  border-color: rgb(0, 0, 255, 0.6);
+  background-color: rgb(0,0,0,.1);
+  color:black;
+}

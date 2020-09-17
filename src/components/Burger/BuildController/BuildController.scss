@@ -1,0 +1,92 @@
+.outerDiv {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: center;
+  justify-content: center;
+  box-shadow: 3px 3px 3px 3px #242425;
+  width: 100%;
+  background-image: linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgba(63, 76, 119, 1) 70.2%);
+}
+
+.btnOrder {
+  font: inherit;
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+  background: #31b0d5;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  align-self: center;
+  outline: none;
+}
+
+.btnOrder:hover,
+.btnOrder:active {
+  background: #f4d004;
+  color: rgb(0, 0, 0, 0.9);
+}
+
+.btnOrder:disabled {
+  background: lightgray;
+  color: black;
+  cursor: not-allowed;
+}
+
+.btnOrder:not(:disabled) {
+  //animation: btnActive 1.5s linear;
+  animation: vibrate-1 0.3s linear 4 both;
+}
+
+
+
+@keyframes vibrate-1 {
+  0% {
+    -webkit-transform: translate(0);
+    transform: translate(0);
+  }
+  20% {
+    -webkit-transform: translate(-2px, 2px);
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    -webkit-transform: translate(-2px, -2px);
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    -webkit-transform: translate(2px, 2px);
+    transform: translate(2px, 2px);
+  }
+  80% {
+    -webkit-transform: translate(2px, -2px);
+    transform: translate(2px, -2px);
+  }
+  100% {
+    -webkit-transform: translate(0);
+    transform: translate(0);
+  }
+}
+
+
+@keyframes btnActive {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1);
+  }
+  55% {
+    transform: rotateZ(15deg);
+  }
+  70% {
+    transform: rotateZ(0deg);
+  }
+  85% {
+    transform: rotateZ(-15deg);
+  }
+  100% {
+    transform: rotateZ(0deg);
+  }
+}

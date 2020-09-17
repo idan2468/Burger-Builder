@@ -1,0 +1,26 @@
+.btn{
+  font: inherit;
+  padding: .5rem;
+  margin: 1rem;
+  cursor: pointer;
+}
+
+.okBtn {
+  background: rgba(33, 139, 36, 1);
+  color: white;
+}
+
+.okBtn:hover,
+.okBtn:active {
+  background: rgba(33, 139, 36, 0.7);
+}
+
+.cancelBtn {
+  background: rgba(177, 34, 34, 1);
+  color: white;
+}
+
+.cancelBtn:hover,
+.cancelBtn:active {
+  background: rgba(177, 34, 34, 0.7);
+}

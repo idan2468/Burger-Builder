@@ -1,0 +1,70 @@
+.controlDiv {
+  font: inherit;
+  font-size: 1rem;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: lightgray solid;
+}
+.controlsDiv{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.labelStyle {
+  color: white;
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+.inputCount{
+  width: 1.5rem;
+  background: lightslategray;
+  text-align: center;
+  font:inherit;
+  font-weight: bold;
+  font-style: italic;
+  color: antiquewhite;
+}
+
+.controlPlus {
+  cursor: pointer;
+  color: #e7e7e7;
+  font-size: 2rem;
+  margin: 0 0.5rem;
+}
+
+.controlMinus:hover,
+.controlMinus:active
+{
+  color: #ed3d3df5;;
+}
+
+.controlPlus:hover,
+.controlPlus:active{
+  color: lightgreen;
+}
+
+.controlMinus {
+  cursor: pointer;
+  color: #e7e7e7;
+  font-size: 2rem;
+  margin: 0 0.5rem;
+  transform: translateY(-2.6px);
+}
+
+.controlMinusDisabled,
+.controlMinusDisabled:hover,
+.controlMinusDisabled:active{
+  color: gray;
+  cursor:not-allowed;
+}
+
+@media (min-width: 550px){
+  .controlDiv{
+    width: 50%;
+    max-width: 20rem;
+  }
+}
