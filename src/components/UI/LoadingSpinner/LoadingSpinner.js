@@ -1,14 +1,20 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import styles from './LoadingSpinner.scss';
 
 const loadingSpinner = (props) => {
-    return (
-        <Fragment>
-            <div style={{width: '20rem'}}>
+    const [content, setContent] = useState(null);
+    setTimeout(() => {
+        setContent(
+            <div className={styles.container}>
                 <div className={styles.loader}>
                     {/*<span>Loading...</span>*/}
                 </div>
             </div>
+        )
+    }, 500);
+    return (
+        <Fragment>
+            {content}
         </Fragment>
     )
 }
