@@ -6,6 +6,7 @@ import BuildController from '../../components/Burger/BuildController/BuildContro
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
+import withErrorHandling from "../../hoc/withErrorHandling";
 
 const ingredientsPrices = {
     'cheese': 1,
@@ -13,18 +14,35 @@ const ingredientsPrices = {
     'bacon': 3,
     'meat': 4,
 }
-
+// {
+//     'cheese': 0,
+//     'salad': 0,
+//     'bacon': 0,
+//     'meat': 0,
+// }
 class BurgerBuilder extends Component {
     state = {
-        ingredients: {
-            'cheese': 0,
-            'salad': 0,
-            'bacon': 0,
-            'meat': 0,
-        },
+        ingredients: null,
         price: 0,
         loading: false
     };
+
+    async componentDidMount() {
+        let stateIngredients = {};
+        try{
+            let ingredients = await axios.get('/ingredients');
+            ingredients.data.map(ingredient => {
+                stateIngredients[ingredient.name] = 0;
+                return null;
+            })
+            this.setState(prevState => {
+                return {ingredients: stateIngredients};
+            });
+        }catch (e){
+            console.log(e);
+        }
+
+    }
 
     calcPrice = (val, ingredient) => {
         let itemChange = val - this.state.ingredients[ingredient];
@@ -53,7 +71,7 @@ class BurgerBuilder extends Component {
     saveOrder = async () => {
         try {
             setTimeout(() => this.state.ordered ? this.setState({loading: true}) : null, 500);
-            const res = await axios.put('/order', {
+            await axios.put('/order', {
                 price: this.state.price,
                 ingredients: this.state.ingredients
             })
@@ -73,23 +91,19 @@ class BurgerBuilder extends Component {
             }
         })
     }
-
-    render() {
-        let modalContent = <OrderSummary {...{
-            ingredients: this.state.ingredients,
-            price: this.state.price,
-            onCancel: this.cancelHandler,
-            onOk: this.saveOrder
-        }}/>;
-
-        if (this.state.loading) {
-            modalContent = <LoadingSpinner/>;
-        }
+    getOrderSummary = () => {
+        return (
+            <OrderSummary {...{
+                ingredients: this.state.ingredients,
+                price: this.state.price,
+                onCancel: this.cancelHandler,
+                onOk: this.saveOrder
+            }}/>
+        )
+    }
+    getBurgerGUI = () => {
         return (
             <Fragment>
-                <Modal openModal={this.state.ordered} onClick={this.cancelHandler}>
-                    {modalContent}
-                </Modal>
                 <BurgerGUI {...{
                     ingredients: this.state.ingredients
                 }}/>
@@ -105,6 +119,27 @@ class BurgerBuilder extends Component {
             </Fragment>
         )
     }
+
+    render() {
+        let burgerGUI = <LoadingSpinner/>;
+        let modalContent = null;
+        if (this.state.ingredients != null) {
+            modalContent = this.getOrderSummary();
+
+            burgerGUI = this.getBurgerGUI();
+        }
+        if (this.state.loading) {
+            modalContent = <LoadingSpinner/>;
+        }
+        return (
+            <Fragment>
+                <Modal openModal={this.state.ordered} onClick={this.cancelHandler}>
+                    {modalContent}
+                </Modal>
+                {burgerGUI}
+            </Fragment>
+        )
+    }
 }
 
-export default BurgerBuilder;
+export default withErrorHandling(BurgerBuilder, axios);
