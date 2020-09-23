@@ -1,0 +1,32 @@
+.formContainer {
+  display: grid;
+  grid-row-gap: 1rem;
+}
+
+.formItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.formItem input {
+  margin-left: 1.5rem;
+  font: inherit;
+  outline: none;
+  border: lightblue solid 2px;
+  border-radius: 8px;
+}
+
+.formItem input:focus,
+.formItem input:active {
+  border-color: forestgreen;
+}
+
+.buttonConfirm {
+  margin: .5rem 0;
+}
+
+.formContainer h2, .formContainer h4 {
+  margin: 0;
+  padding: 0;
+}
