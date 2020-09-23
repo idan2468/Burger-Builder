@@ -1,0 +1,33 @@
+.ingredientsCol1 {
+  grid-row: ingName;
+  justify-self: center;
+  margin: 0;
+  padding: 0;
+}
+
+.price {
+  text-align: center;
+  margin: 0;
+  //font: inherit;
+}
+
+.ingredientsCol2 {
+  grid-row: count;
+  justify-self: center;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.ingredientsGrid {
+  display: grid;
+  grid-auto-flow: column;
+  //grid-template-columns: min-content 20%;
+  grid-template-areas: 'ingName'
+                        'count';
+  grid-gap: 0 1rem;
+}
