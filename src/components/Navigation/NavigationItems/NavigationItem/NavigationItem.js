@@ -1,15 +1,17 @@
 import PropTypes from 'prop-types'
 import React, {Fragment} from 'react';
 import styles from "./NavigationItem.scss";
+import {NavLink} from "react-router-dom";
 
 const navigationItem = (props) => {
     let linkStyles = [styles.link];
-    if(props.active){
+    if (props.active) {
         linkStyles.push(styles.linkActive);
     }
     return (
         <Fragment>
-            <a href={props.link} className={linkStyles.join(' ')}>{props.children}</a>
+            <NavLink to={props.link} activeClassName={styles.linkActive} exact
+                     className={linkStyles.join(' ')}>{props.children}</NavLink>
         </Fragment>
     )
 }
@@ -17,6 +19,6 @@ const navigationItem = (props) => {
 export default navigationItem;
 
 navigationItem.propTypes = {
-  active: PropTypes.bool,
-  link: PropTypes.string
+    active: PropTypes.bool,
+    link: PropTypes.string
 }

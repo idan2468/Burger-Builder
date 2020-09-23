@@ -7,9 +7,9 @@ const navigationItems = (props) => {
         <Fragment>
             <div className={styles.container}>
                 <NavigationItem link={'/'}>Main</NavigationItem>
-                <NavigationItem link={'/'}>BurgerBuilder</NavigationItem>
-                <NavigationItem link={'/'}>Orders</NavigationItem>
-                <NavigationItem link={'/'}>Login</NavigationItem>
+                <NavigationItem link={'/checkout'}>Checkout</NavigationItem>
+                {/*<NavigationItem link={'/'}>Orders</NavigationItem>*/}
+                {/*<NavigationItem link={'/'}>Login</NavigationItem>*/}
             </div>
         </Fragment>
     )
