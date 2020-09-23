@@ -14,12 +14,7 @@ const ingredientsPrices = {
     'bacon': 3,
     'meat': 4,
 }
-// {
-//     'cheese': 0,
-//     'salad': 0,
-//     'bacon': 0,
-//     'meat': 0,
-// }
+
 class BurgerBuilder extends Component {
     state = {
         ingredients: null,
@@ -29,7 +24,7 @@ class BurgerBuilder extends Component {
 
     async componentDidMount() {
         let stateIngredients = {};
-        try{
+        try {
             let ingredients = await axios.get('/ingredients');
             ingredients.data.map(ingredient => {
                 stateIngredients[ingredient.name] = 0;
@@ -38,7 +33,7 @@ class BurgerBuilder extends Component {
             this.setState(prevState => {
                 return {ingredients: stateIngredients};
             });
-        }catch (e){
+        } catch (e) {
             console.log(e);
         }
 
@@ -68,21 +63,25 @@ class BurgerBuilder extends Component {
             }
         })
     }
-    saveOrder = async () => {
-        try {
-            setTimeout(() => this.state.ordered ? this.setState({loading: true}) : null, 500);
-            await axios.put('/order', {
-                price: this.state.price,
-                ingredients: this.state.ingredients
-            })
-            // await new Promise(resolve => setTimeout(() => resolve(), 2000)); delay for showing the spinner
-            this.setState(prevState => {
-                return {ordered: false};
-            })
-            setTimeout(() => this.setState({loading: false}), 1000)
-        } catch (error) {
-
-        }
+    goToCheckout = async () => {
+        let query = Object.keys(this.state.ingredients).map(key =>
+            `${encodeURIComponent(key)}=${encodeURIComponent(this.state.ingredients[key])}`).join('&');
+        query += `&price=${this.state.price}`
+        this.props.history.push({pathname: '/checkout', search: query});
+        // try {
+        //     setTimeout(() => this.state.ordered ? this.setState({loading: true}) : null, 500);
+        //     await axios.put('/order', {
+        //         price: this.state.price,
+        //         ingredients: this.state.ingredients
+        //     })
+        //     // await new Promise(resolve => setTimeout(() => resolve(), 2000)); delay for showing the spinner
+        //     this.setState(prevState => {
+        //         return {ordered: false};
+        //     })
+        //     setTimeout(() => this.setState({loading: false}), 1000)
+        // } catch (error) {
+        //
+        // }
     }
     cancelHandler = () => {
         this.setState(prevState => {
@@ -97,7 +96,7 @@ class BurgerBuilder extends Component {
                 ingredients: this.state.ingredients,
                 price: this.state.price,
                 onCancel: this.cancelHandler,
-                onOk: this.saveOrder
+                onOk: this.goToCheckout
             }}/>
         )
     }
@@ -107,7 +106,7 @@ class BurgerBuilder extends Component {
                 <BurgerGUI {...{
                     ingredients: this.state.ingredients
                 }}/>
-                <div className={styles.buildcontrollerContainer}>
+                <div className={styles.buildControllerContainer}>
                     <p className={styles.priceLabel}>Price: {this.state.price}$</p>
                     <BuildController {...{
                         ingredients: this.state.ingredients,
@@ -129,7 +128,7 @@ class BurgerBuilder extends Component {
             burgerGUI = this.getBurgerGUI();
         }
         if (this.state.loading) {
-            modalContent = <LoadingSpinner/>;
+            modalContent = <LoadingSpinner show={this.state.loading} />;
         }
         return (
             <Fragment>
