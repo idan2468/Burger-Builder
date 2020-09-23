@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React, {Fragment} from 'react';
 import styles from './SideDrawer.scss'
-import NavigationItem from "../NavigationItems/NavigationItem/NavigationItem";
 import Backdrop from '../../UI/Backdrop/Backdrop';
+import NavigationItem from "../NavigationItems/NavigationItem/NavigationItem";
 
 const sideDrawer = (props) => {
     let sliderStyles = [styles.slider];
@@ -16,9 +16,7 @@ const sideDrawer = (props) => {
             <Backdrop show={props.show} onClick={props.onClick}/>
             <div className={sliderStyles.join(' ')}>
                 <NavigationItem link={'/'}>Main</NavigationItem>
-                <NavigationItem link={'/'}>BurgerBuilder</NavigationItem>
-                <NavigationItem link={'/'}>Orders</NavigationItem>
-                <NavigationItem link={'/'}>Login</NavigationItem>
+                <NavigationItem link={'/orders'}>Orders</NavigationItem>
             </div>
         </Fragment>
     )
