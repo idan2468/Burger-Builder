@@ -7,7 +7,7 @@ const order = (props) => {
     if (props.ingredients) {
         ingredients = Object.keys(props.ingredients).map(key => {
             return (
-                <div className={styles.ingredient}>
+                <div className={styles.ingredient} key={key}>
                     <h4>{key}</h4>
                     <h4>{props.ingredients[key]}</h4>
                 </div>
