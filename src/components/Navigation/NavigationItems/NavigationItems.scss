@@ -4,7 +4,13 @@
   justify-content: flex-end;
   width: 70%;
   display: none;
-  margin-right: 2rem ;
+}
+
+.sideContainer{
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (min-width: 500px) {

@@ -3,13 +3,15 @@ import styles from './NavigationItems.scss'
 import NavigationItem from './NavigationItem/NavigationItem'
 
 const navigationItems = (props) => {
+    let containerStyle = styles.container;
+    if (props.side){
+        containerStyle = styles.sideContainer
+    }
     return (
         <Fragment>
-            <div className={styles.container}>
+            <div className={containerStyle}>
                 <NavigationItem link={'/'}>Main</NavigationItem>
                 <NavigationItem link={'/orders'}>Orders</NavigationItem>
-                {/*<NavigationItem link={'/'}>Orders</NavigationItem>*/}
-                {/*<NavigationItem link={'/'}>Login</NavigationItem>*/}
             </div>
         </Fragment>
     )
