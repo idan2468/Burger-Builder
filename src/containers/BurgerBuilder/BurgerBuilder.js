@@ -33,7 +33,8 @@ class BurgerBuilder extends Component {
             this.setState(prevState => {
                 return {ingredients: stateIngredients};
             });
-        } catch (e) {
+        }
+        catch (e) {
             console.log(e);
         }
 
@@ -65,7 +66,7 @@ class BurgerBuilder extends Component {
     }
     goToCheckout = async () => {
         let query = Object.keys(this.state.ingredients).map(key =>
-            `${encodeURIComponent(key)}=${encodeURIComponent(this.state.ingredients[key])}`).join('&');
+          `${encodeURIComponent(key)}=${encodeURIComponent(this.state.ingredients[key])}`).join('&');
         query += `&price=${this.state.price}`
         this.props.history.push({pathname: '/checkout', search: query});
         // try {
@@ -92,30 +93,30 @@ class BurgerBuilder extends Component {
     }
     getOrderSummary = () => {
         return (
-            <OrderSummary {...{
-                ingredients: this.state.ingredients,
-                price: this.state.price,
-                onCancel: this.cancelHandler,
-                onOk: this.goToCheckout
-            }}/>
+          <OrderSummary {...{
+              ingredients: this.state.ingredients,
+              price: this.state.price,
+              onCancel: this.cancelHandler,
+              onOk: this.goToCheckout
+          }}/>
         )
     }
     getBurgerGUI = () => {
         return (
-            <Fragment>
-                <BurgerGUI {...{
-                    ingredients: this.state.ingredients
-                }}/>
-                <div className={styles.buildControllerContainer}>
-                    <p className={styles.priceLabel}>Price: {this.state.price}$</p>
-                    <BuildController {...{
-                        ingredients: this.state.ingredients,
-                        price: this.state.price,
-                        onClick: this.changeIngredientCount,
-                        onOrder: this.orderHandler
-                    }}/>
-                </div>
-            </Fragment>
+          <Fragment>
+              <BurgerGUI {...{
+                  ingredients: this.state.ingredients
+              }}/>
+              <div className={styles.buildControllerContainer}>
+                  <p className={styles.priceLabel}>Price: {this.state.price}$</p>
+                  <BuildController {...{
+                      ingredients: this.state.ingredients,
+                      price: this.state.price,
+                      onClick: this.changeIngredientCount,
+                      onOrder: this.orderHandler
+                  }}/>
+              </div>
+          </Fragment>
         )
     }
 
@@ -128,15 +129,15 @@ class BurgerBuilder extends Component {
             burgerGUI = this.getBurgerGUI();
         }
         if (this.state.loading) {
-            modalContent = <LoadingSpinner show={this.state.loading} />;
+            modalContent = <LoadingSpinner show={this.state.loading}/>;
         }
         return (
-            <Fragment>
-                <Modal openModal={this.state.ordered} onClick={this.cancelHandler}>
-                    {modalContent}
-                </Modal>
-                {burgerGUI}
-            </Fragment>
+          <Fragment>
+              <Modal openModal={this.state.ordered} onClick={this.cancelHandler}>
+                  {modalContent}
+              </Modal>
+              {burgerGUI}
+          </Fragment>
         )
     }
 }
