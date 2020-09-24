@@ -3,6 +3,7 @@ import Button from "../../components/UI/Button/Button";
 import styles from './ContactDetails.scss';
 import axios from "axios";
 import {withRouter} from "react-router";
+import Input from "../../components/UI/Input/Input";
 
 class ContactDetails extends Component {
     state = {
@@ -26,8 +27,7 @@ class ContactDetails extends Component {
             })
             // await new Promise(resolve => setTimeout(() => resolve(), 2000)); delay for showing the spinner
             setTimeout(() => this.setState({loading: false}), 1000)
-        }
-        catch (error) {
+        } catch (error) {
 
         }
         this.props.history.replace('/');
@@ -36,31 +36,19 @@ class ContactDetails extends Component {
 
     render() {
         return (
-          <Fragment>
-              <form className={styles.formContainer}>
-                  <h2>Enter your credentials:</h2>
-                  <label className={styles.formItem}>Full Name
-                      <input type="text" name="fullName" placeholder={'Enter your name'}/>
-                  </label>
-                  <label className={styles.formItem}>Email
-                      <input type="text" name="email" placeholder={'Enter your email'}/>
-                  </label>
-                  <label className={styles.formItem}>Pay Method
-                      <input type="text" name="payMethod" placeholder={'Enter pay method'}/>
-                  </label>
-                  <h4>Address</h4>
-                  <label className={styles.formItem}>City
-                      <input type="text" name="city" placeholder={'Enter City'}/>
-                  </label>
-                  <label className={styles.formItem}>Street
-                      <input type="text" name="street" placeholder={'Enter Streed'}/>
-                  </label>
-                  <label className={styles.formItem}>Postal Code
-                      <input type="text" name="postalCode" placeholder={'Enter Postal Code'}/>
-                  </label>
-                  <Button type={'ok'} text={'Confirm'} onClick={this.submitHandler} className={styles.buttonConfirm}/>
-              </form>
-          </Fragment>
+            <Fragment>
+                <form className={styles.formContainer}>
+                    <h2>Enter your credentials:</h2>
+                    <Input placeholder={'Enter your name'} name={'fullName'} label={'Full Name'}/>
+                    <Input placeholder={'Enter your email'} name={'email'} label={'Email'}/>
+                    <Input placeholder={'Enter pay method'} name={'payMethod'} label={'Pay Method'}/>
+                    <h4>Address</h4>
+                    <Input placeholder={'Enter City'} name={'city'} label={'City'}/>
+                    <Input placeholder={'Enter Street'} name={'street'} label={'Street'}/>
+                    <Input placeholder={'Enter Postal Code'} name={'postalCode'} label={'Postal Code'} type={'number'}/>
+                    <Button type={'ok'} text={'Confirm'} onClick={this.submitHandler} className={styles.buttonConfirm}/>
+                </form>
+            </Fragment>
         )
     }
 }
