@@ -1,8 +1,14 @@
 .ordersContainer {
   display: grid;
-  grid-template-columns: 30% 30% 30%;
+  grid-template-columns: 45% 45%;
   grid-auto-rows: 20rem;
   grid-auto-flow: row;
   grid-column-gap: 2rem;
   justify-content: center;
+}
+
+@media (min-width: 550px) {
+  .ordersContainer{
+    grid-template-columns: 30% 30% 30%;
+  }
 }

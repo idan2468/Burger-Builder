@@ -18,7 +18,7 @@ class Orders extends Component {
             })
             return (
                 <Order ingredients={ingredients} name={order.customer.fullName} price={order.price}
-                       key={order._id} style={{gridColumn: (index % 3) + 1}}/>
+                       key={order._id}/>
             )
         })
     }
