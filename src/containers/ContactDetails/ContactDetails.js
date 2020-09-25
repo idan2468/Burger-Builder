@@ -4,6 +4,7 @@ import styles from './ContactDetails.scss';
 import axios from "axios";
 import {withRouter} from "react-router";
 import Input from "../../components/UI/Input/Input";
+import validator from "validator";
 
 class ContactDetails extends Component {
     state = {
@@ -14,8 +15,13 @@ class ContactDetails extends Component {
                     name: 'fullName',
                     label: 'Full Name',
                     placeholder: 'Enter Your Name',
-                    type: 'text'
-                }
+                    type: 'text',
+                    valid: true
+                },
+                isValid() {
+                    return validator.isAlpha(this.value.replaceAll(' ', '')) && !validator.isEmpty(this.value)
+                },
+                touched: false
             },
             email: {
                 value: '',
@@ -23,18 +29,28 @@ class ContactDetails extends Component {
                     name: 'email',
                     label: 'Email',
                     placeholder: 'Enter Your Email',
-                    type: 'email'
-                }
+                    type: 'email',
+                    valid: true
+                },
+                isValid() {
+                    return validator.isEmail(this.value)
+                },
+                touched: false
             },
             payMethod: {
-                value: '',
+                value: 'Credit Card',
                 config: {
                     name: 'payMethod',
                     label: 'Pay Method',
                     options: ['Credit Card', 'Cash'],
                     type: 'text',
-                    inputType: 'select'
-                }
+                    inputType: 'select',
+                    valid: true
+                },
+                isValid() {
+                    return true
+                },
+                touched: true
             },
             street: {
                 value: '',
@@ -42,8 +58,13 @@ class ContactDetails extends Component {
                     name: 'street',
                     label: 'Street',
                     placeholder: 'Enter Your Street',
-                    type: 'text'
-                }
+                    type: 'text',
+                    valid: true
+                },
+                isValid() {
+                    return validator.isAlphanumeric(this.value.replaceAll(' ', '')) && !validator.isEmpty(this.value)
+                },
+                touched: false
             },
             postalCode: {
                 value: '',
@@ -51,8 +72,13 @@ class ContactDetails extends Component {
                     name: 'postalCode',
                     label: 'Postal Code',
                     placeholder: 'Enter Postal Code',
-                    type: 'number'
-                }
+                    type: 'number',
+                    valid: true
+                },
+                isValid() {
+                    return validator.isNumeric(this.value)
+                },
+                touched: false
             },
             city: {
                 value: '',
@@ -60,10 +86,16 @@ class ContactDetails extends Component {
                     name: 'city',
                     label: 'City',
                     placeholder: 'Enter Your City',
-                    type: 'text'
-                }
+                    type: 'text',
+                    valid: true
+                },
+                isValid() {
+                    return !validator.isEmpty(this.value)
+                },
+                touched: false
             }
-        }
+        },
+        isFormValid: false
     }
     generateCustomers = () => {
         let customer = {};
@@ -99,13 +131,23 @@ class ContactDetails extends Component {
         }
         return inputs;
     }
+    isFormValid = (updatedFormDetails) => {
+        let isValid = true;
+        for (const key in updatedFormDetails) {
+            isValid = isValid && updatedFormDetails[key].config.valid && updatedFormDetails[key].touched;
+        }
+        return isValid;
+    }
 
     onChangeHandler(event, key) {
         let updatedFormDetails = {...this.state.formDetails};
         let keyToChange = {...this.state.formDetails[key]};
         keyToChange.value = event.target.value;
+        keyToChange.config.valid = keyToChange.isValid();
+        keyToChange.touched = true;
         updatedFormDetails[key] = keyToChange;
-        this.setState({formDetails: updatedFormDetails});
+        let isFormValid = this.isFormValid(updatedFormDetails);
+        this.setState({formDetails: updatedFormDetails, isFormValid: isFormValid});
     }
 
     render() {
@@ -122,7 +164,8 @@ class ContactDetails extends Component {
                     {/*<Input placeholder={'Enter City'} name={'city'} label={'City'}/>*/}
                     {/*<Input placeholder={'Enter Street'} name={'street'} label={'Street'}/>*/}
                     {/*<Input placeholder={'Enter Postal Code'} name={'postalCode'} label={'Postal Code'} type={'number'}/>*/}
-                    <Button type={'ok'} text={'Confirm'} className={styles.buttonConfirm}/>
+                    <Button type={'ok'} text={'Confirm'} className={styles.buttonConfirm}
+                            disabled={!this.state.isFormValid}/>
                 </form>
             </Fragment>
         )
