@@ -112,7 +112,7 @@ class ContactDetails extends Component {
         let generatedForm = this.generateForm();
         return (
             <Fragment>
-                <form className={styles.formContainer}>
+                <form className={styles.formContainer} onSubmit={this.submitHandler}>
                     <h2>Enter your details:</h2>
                     {generatedForm}
                     {/*<Input placeholder={'Enter your name'} name={'fullName'} label={'Full Name'}/>*/}
@@ -122,7 +122,7 @@ class ContactDetails extends Component {
                     {/*<Input placeholder={'Enter City'} name={'city'} label={'City'}/>*/}
                     {/*<Input placeholder={'Enter Street'} name={'street'} label={'Street'}/>*/}
                     {/*<Input placeholder={'Enter Postal Code'} name={'postalCode'} label={'Postal Code'} type={'number'}/>*/}
-                    <Button type={'ok'} text={'Confirm'} onClick={this.submitHandler} className={styles.buttonConfirm}/>
+                    <Button type={'ok'} text={'Confirm'} className={styles.buttonConfirm}/>
                 </form>
             </Fragment>
         )
