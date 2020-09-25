@@ -4,6 +4,14 @@
   margin: 1rem;
   cursor: pointer;
 }
+.btn:disabled,
+.btn:disabled:hover,
+.btn:disabled:active{
+  opacity: .5;
+  background: rgb(128, 128, 128,.5);
+  cursor: not-allowed;
+  color: #242425;
+}
 
 .okBtn {
   background: rgba(33, 139, 36, 1);

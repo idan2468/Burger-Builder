@@ -15,7 +15,8 @@ const button = (props) => {
     }
     return (
         <Fragment>
-            <button className={buttonStyles.join(' ')} onClick={props.onClick}>{props.text}</button>
+            <button className={buttonStyles.join(' ')} onClick={props.onClick}
+                    disabled={props.disabled}>{props.text}</button>
         </Fragment>
     )
 }
@@ -23,13 +24,14 @@ const button = (props) => {
 export default button;
 
 button.propTypes = {
-    onClick: PropTypes.func,
-    text: PropTypes.string,
-    type: PropTypes.string,
-    className: PropTypes.string
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func,
+  text: PropTypes.string,
+  type: PropTypes.string
 }
 
 button.defaultProps = {
-    text: 'ok',
-    type: 'ok'
+  text: 'ok',
+  type: 'ok'
 }
