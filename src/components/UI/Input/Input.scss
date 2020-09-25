@@ -26,3 +26,8 @@
 .formItem input:hover {
   background: rgba(233, 227, 227, 0.1);
 }
+
+.invalid{
+  border-color: rgba(212, 49, 49,.8) !important;
+  background: rgba(240, 128, 128,.5) !important;
+}
