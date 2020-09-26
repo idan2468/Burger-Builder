@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import CheckoutSummary from "./CheckoutSummary/CheckoutSummary";
+import CheckoutSummary from "../../components/Checkout/CheckoutSummary/CheckoutSummary";
 import Burger from "../../components/Burger/Burger";
 import styles from './Checkout.scss'
 import {Route} from "react-router";
@@ -7,8 +7,8 @@ import ContactDetails from "../ContactDetails/ContactDetails";
 
 class Checkout extends Component {
     state = {
-        ingredients: {},
-        price: null
+        ingredients: {}, // redux
+        price: null // redux
     }
 
     componentWillMount() {
