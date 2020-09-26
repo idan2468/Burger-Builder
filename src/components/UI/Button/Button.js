@@ -10,8 +10,11 @@ const mapTypeToStyle = {
 const button = (props) => {
     let buttonStyles = [styles.btn];
     buttonStyles.push(mapTypeToStyle[props.type]);
+    if (props.extraStyle) {
+        buttonStyles.push(props.extraStyle);
+    }
     if (props.className) {
-        buttonStyles.push(props.className);
+        buttonStyles = [props.className];
     }
     return (
         <Fragment>
@@ -24,14 +27,15 @@ const button = (props) => {
 export default button;
 
 button.propTypes = {
-  className: PropTypes.string,
-  disabled: PropTypes.bool,
-  onClick: PropTypes.func,
-  text: PropTypes.string,
-  type: PropTypes.string
+    extraStyle: PropTypes.string,
+    disabled: PropTypes.bool,
+    onClick: PropTypes.func,
+    text: PropTypes.string,
+    type: PropTypes.string,
+    className: PropTypes.string
 }
 
 button.defaultProps = {
-  text: 'ok',
-  type: 'ok'
+    text: 'ok',
+    type: 'ok'
 }
