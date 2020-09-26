@@ -8,6 +8,8 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 import withErrorHandling from "../../hoc/withErrorHandling";
 
+
+// take prices from DB
 const ingredientsPrices = {
     'cheese': 1,
     'salad': 2,
@@ -17,9 +19,10 @@ const ingredientsPrices = {
 
 class BurgerBuilder extends Component {
     state = {
-        ingredients: null,
-        price: 0,
-        loading: false
+        ingredients: null, //redux
+        price: 0, // redux
+        loading: false,
+        ordered: false
     };
 
     async componentDidMount() {
@@ -33,8 +36,7 @@ class BurgerBuilder extends Component {
             this.setState(prevState => {
                 return {ingredients: stateIngredients};
             });
-        }
-        catch (e) {
+        } catch (e) {
             console.log(e);
         }
 
@@ -66,7 +68,7 @@ class BurgerBuilder extends Component {
     }
     goToCheckout = async () => {
         let query = Object.keys(this.state.ingredients).map(key =>
-          `${encodeURIComponent(key)}=${encodeURIComponent(this.state.ingredients[key])}`).join('&');
+            `${encodeURIComponent(key)}=${encodeURIComponent(this.state.ingredients[key])}`).join('&');
         query += `&price=${this.state.price}`
         this.props.history.push({pathname: '/checkout', search: query});
         // try {
@@ -93,30 +95,30 @@ class BurgerBuilder extends Component {
     }
     getOrderSummary = () => {
         return (
-          <OrderSummary {...{
-              ingredients: this.state.ingredients,
-              price: this.state.price,
-              onCancel: this.cancelHandler,
-              onOk: this.goToCheckout
-          }}/>
+            <OrderSummary {...{
+                ingredients: this.state.ingredients,
+                price: this.state.price,
+                onCancel: this.cancelHandler,
+                onOk: this.goToCheckout
+            }}/>
         )
     }
     getBurgerGUI = () => {
         return (
-          <Fragment>
-              <BurgerGUI {...{
-                  ingredients: this.state.ingredients
-              }}/>
-              <div className={styles.buildControllerContainer}>
-                  <p className={styles.priceLabel}>Price: {this.state.price}$</p>
-                  <BuildController {...{
-                      ingredients: this.state.ingredients,
-                      price: this.state.price,
-                      onClick: this.changeIngredientCount,
-                      onOrder: this.orderHandler
-                  }}/>
-              </div>
-          </Fragment>
+            <Fragment>
+                <BurgerGUI {...{
+                    ingredients: this.state.ingredients
+                }}/>
+                <div className={styles.buildControllerContainer}>
+                    <p className={styles.priceLabel}>Price: {this.state.price}$</p>
+                    <BuildController {...{
+                        ingredients: this.state.ingredients,
+                        price: this.state.price,
+                        onClick: this.changeIngredientCount,
+                        onOrder: this.orderHandler
+                    }}/>
+                </div>
+            </Fragment>
         )
     }
 
@@ -132,12 +134,12 @@ class BurgerBuilder extends Component {
             modalContent = <LoadingSpinner show={this.state.loading}/>;
         }
         return (
-          <Fragment>
-              <Modal openModal={this.state.ordered} onClick={this.cancelHandler}>
-                  {modalContent}
-              </Modal>
-              {burgerGUI}
-          </Fragment>
+            <Fragment>
+                <Modal openModal={this.state.ordered} onClick={this.cancelHandler}>
+                    {modalContent}
+                </Modal>
+                {burgerGUI}
+            </Fragment>
         )
     }
 }
