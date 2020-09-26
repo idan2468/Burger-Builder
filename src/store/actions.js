@@ -1,0 +1,1 @@
+export const CHANGE_ING_COUNT = 'CHANGE_ING_COUNT';
