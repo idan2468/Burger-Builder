@@ -19,6 +19,10 @@ const input = (props) => {
                     {optionsElements}
                 </select>
             );
+            break;
+        default:
+            inputElement = null
+            break;
     }
     return (
         <Fragment>
@@ -35,19 +39,19 @@ const input = (props) => {
 export default input;
 
 input.propTypes = {
-  inputType: PropTypes.string,
-  label: PropTypes.string,
-  name: PropTypes.string,
-  onChange: PropTypes.func,
-  options: PropTypes.array,
-  placeholder: PropTypes.string,
-  type: PropTypes.string,
-  valid: PropTypes.bool,
-  value: PropTypes.string
+    inputType: PropTypes.string,
+    label: PropTypes.string,
+    name: PropTypes.string,
+    onChange: PropTypes.func,
+    options: PropTypes.array,
+    placeholder: PropTypes.string,
+    type: PropTypes.string,
+    valid: PropTypes.bool,
+    value: PropTypes.string
 }
 
 input.defaultProps = {
-  inputType: 'input',
-  options: [],
-  type: 'text'
+    inputType: 'input',
+    options: [],
+    type: 'text'
 }
