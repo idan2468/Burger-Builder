@@ -164,7 +164,7 @@ class ContactDetails extends Component {
                     {/*<Input placeholder={'Enter City'} name={'city'} label={'City'}/>*/}
                     {/*<Input placeholder={'Enter Street'} name={'street'} label={'Street'}/>*/}
                     {/*<Input placeholder={'Enter Postal Code'} name={'postalCode'} label={'Postal Code'} type={'number'}/>*/}
-                    <Button type={'ok'} text={'Confirm'} className={styles.buttonConfirm}
+                    <Button type={'ok'} text={'Confirm'} extraStyle={styles.buttonConfirm}
                             disabled={!this.state.isFormValid}/>
                 </form>
             </Fragment>
