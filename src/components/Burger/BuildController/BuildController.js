@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, {Fragment} from 'react';
 import styles from './BuildController.scss';
 import BuildControl from './BuildControl/BuildControl'
+import Button from "../../UI/Button/Button";
 
 const mapTypeToLabel = {
     'meat': 'Meat',
@@ -27,7 +28,8 @@ const buildController = (props) => {
         <Fragment>
             <div className={styles.outerDiv}>
                 {controls}
-                <button className={styles.btnOrder} disabled={props.price === 0} onClick={props.onOrder}>Order</button>
+                <Button className={styles.btnOrder} disabled={props.price === 0} onClick={props.onOrder}
+                        text={'Order'}/>
             </div>
         </Fragment>
     )
