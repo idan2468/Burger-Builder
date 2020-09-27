@@ -4,22 +4,23 @@ import Burger from "../../components/Burger/Burger";
 import styles from './Checkout.scss'
 import {Route} from "react-router";
 import ContactDetails from "../ContactDetails/ContactDetails";
+import {connect} from "react-redux";
 
 class Checkout extends Component {
     state = {
-        ingredients: {}, // redux
-        price: null // redux
+        // ingredients: {}, // redux
+        // price: null // redux
     }
 
     componentWillMount() {
-        let ingredientsArr = this.props.location.search.slice(1).split('&');
-        let price = +ingredientsArr.pop().split('=')[1];
-        const ingredients = {}
-        for (let ing of ingredientsArr) {
-            let ingName = ing.split('=')[0];
-            ingredients[ingName] = +ing.split('=')[1];
-        }
-        this.setState({ingredients: ingredients, price: price})
+        // let ingredientsArr = this.props.location.search.slice(1).split('&');
+        // let price = +ingredientsArr.pop().split('=')[1];
+        // const ingredients = {}
+        // for (let ing of ingredientsArr) {
+        //     let ingName = ing.split('=')[0];
+        //     ingredients[ingName] = +ing.split('=')[1];
+        // }
+        // this.setState({ingredients: ingredients, price: price})
     }
 
     orderHandler = async () => {
@@ -36,16 +37,22 @@ class Checkout extends Component {
         return (
             <Fragment>
                 <div className={styles.container}>
-                    <Burger ingredients={this.state.ingredients}/>
-                    <CheckoutSummary ingredients={this.state.ingredients} price={this.state.price}
+                    <Burger ingredients={this.props.ingredients}/>
+                    <CheckoutSummary ingredients={this.props.ingredients} price={this.props.price}
                                      onOk={this.orderHandler} onCancel={this.cancelOrder}/>
-                    <Route path={this.props.match.path + '/contact-details'}
-                           render={() => <ContactDetails ingredients={this.state.ingredients}
-                                                         price={this.state.price}/>}/>
+                    <Route path={this.props.match.path + '/contact-details'} component={ContactDetails}/>
                 </div>
             </Fragment>
         )
     }
 }
 
-export default Checkout;
+const mapStateToProps = (state) => {
+    return {
+        ingredients: state.burger.ingredients,
+        price: state.burger.price
+    }
+}
+
+
+export default connect(mapStateToProps)(Checkout);
