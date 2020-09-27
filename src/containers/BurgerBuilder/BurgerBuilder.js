@@ -68,10 +68,10 @@ class BurgerBuilder extends Component {
         })
     }
     goToCheckout = async () => {
-        let query = Object.keys(this.props.ingredients).map(key =>
-            `${encodeURIComponent(key)}=${encodeURIComponent(this.props.ingredients[key])}`).join('&');
-        query += `&price=${this.props.price}`
-        this.props.history.push({pathname: '/checkout', search: query});
+        // let query = Object.keys(this.props.ingredients).map(key =>
+        //     `${encodeURIComponent(key)}=${encodeURIComponent(this.props.ingredients[key])}`).join('&');
+        // query += `&price=${this.props.price}`
+        this.props.history.push({pathname: '/checkout'});
     }
     cancelHandler = () => {
         this.setState(prevState => {
