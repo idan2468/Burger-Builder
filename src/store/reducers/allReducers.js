@@ -1,3 +1,2 @@
-import burgerReducer from "./burgerReducer";
-
-export {burgerReducer};
+export {burgerReducer} from "./burgerReducer";
+export {orderReducer} from './ordersReducers';

@@ -2,12 +2,12 @@ import * as actionsTypes from '../actions/actionsTypes';
 import {updateObject} from '../utilities';
 import produce from "immer";
 
-const ingredientsPrices = {
-    'cheese': 1,
-    'salad': 2,
-    'bacon': 3,
-    'meat': 4,
-}
+// const ingredientsPrices = {
+//     'cheese': 1,
+//     'salad': 2,
+//     'bacon': 3,
+//     'meat': 4,
+// }
 
 const initialState = {
     ingredients: null,
@@ -26,7 +26,7 @@ function changeIngCount(action, state) {
     });
 }
 
-const burgerReducer = (state = initialState, action) => {
+export const burgerReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionsTypes.CHANGE_ING_COUNT:
             return changeIngCount(action, state);
@@ -40,5 +40,3 @@ const burgerReducer = (state = initialState, action) => {
             return state;
     }
 }
-
-export default burgerReducer;

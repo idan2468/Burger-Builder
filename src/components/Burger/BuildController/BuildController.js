@@ -4,12 +4,12 @@ import styles from './BuildController.scss';
 import BuildControl from './BuildControl/BuildControl'
 import Button from "../../UI/Button/Button";
 
-const mapTypeToLabel = {
-    'meat': 'Meat',
-    'salad': 'Green Salad',
-    'cheese': 'Cheddar',
-    'bacon': 'Delicious Bacon'
-}
+// const mapTypeToLabel = {
+//     'meat': 'Meat',
+//     'salad': 'Green Salad',
+//     'cheese': 'Cheddar',
+//     'bacon': 'Delicious Bacon'
+// }
 
 const buildController = (props) => {
     let controls = Object.keys(props.ingredients).map((ingredient) => {

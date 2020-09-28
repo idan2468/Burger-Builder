@@ -1,16 +1,18 @@
 import React, {Component, Fragment} from 'react';
 import Order from "../../components/Order/Order";
 import styles from './Orders.scss';
-import axios from "axios";
+import * as actions from "../../store/actions/actions";
+import {connect} from "react-redux";
+import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 
 
 class Orders extends Component {
     state = {
-        orders: [],
-        loading: true
+        // orders: [],
+        // loading: true
     }
     getOrders = () => {
-        return this.state.orders.map((order, index) => {
+        return this.props.orders.map((order, index) => {
             let ingredients = Object.keys(order.burgerIngredients).reduce((obj, key) => {
                 if (order.burgerIngredients[key] !== 0) {
                     obj[key] = order.burgerIngredients[key]
@@ -25,19 +27,26 @@ class Orders extends Component {
     }
 
     async componentDidMount() {
-        try {
-            const orders = await axios.get('/orders');
-            console.log(orders);
-            this.setState({orders: orders.data, loading: false});
-        } catch (e) {
-
-        }
+        this.props.fetchOrders();
+        // try {
+        //     const orders = await axios.get('/orders');
+        //     console.log(orders);
+        //     this.setState({orders: orders.data, loading: false});
+        // } catch (e) {
+        //
+        // }
     }
 
     render() {
         let orders = this.getOrders();
-        if (orders.length === 0 && !this.state.loading) {
-            orders = <h1>No Orders yet!!</h1>
+        if (this.props.orders.length === 0 && !this.props.loading) {
+            orders = <h1>No Orders yet!!</h1>;
+        }
+        if (this.props.loading) {
+            orders = <LoadingSpinner/>;
+        }
+        if (this.props.error) {
+            orders = <h1 style={{textAlign: 'center'}}>{this.props.error}</h1>;
         }
         return (
             <Fragment>
@@ -49,4 +58,19 @@ class Orders extends Component {
     }
 }
 
-export default Orders;
+const mapStateToProps = (state) => {
+    return {
+        orders: state.order.orders,
+        error: state.order.error,
+        loading: state.order.loading
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchOrders: () => dispatch(actions.fetchOrders()),
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Orders);

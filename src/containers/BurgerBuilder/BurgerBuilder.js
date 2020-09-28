@@ -12,12 +12,12 @@ import * as actions from '../../store/actions/actions';
 
 
 // take prices from DB
-const ingredientsPrices = {
-    'cheese': 1,
-    'salad': 2,
-    'bacon': 3,
-    'meat': 4,
-}
+// const ingredientsPrices = {
+//     'cheese': 1,
+//     'salad': 2,
+//     'bacon': 3,
+//     'meat': 4,
+// }
 
 class BurgerBuilder extends Component {
     state = {
