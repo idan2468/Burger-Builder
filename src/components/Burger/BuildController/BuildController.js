@@ -16,10 +16,10 @@ const buildController = (props) => {
         return (
             <BuildControl {...{
                 name: ingredient,
-                count: props.ingredients[ingredient],
+                count: props.ingredients[ingredient].count,
                 key: ingredient,
                 onClick: props.onClick,
-                label: mapTypeToLabel[ingredient]
+                label: props.ingredients[ingredient].label
             }}/>
         )
     });

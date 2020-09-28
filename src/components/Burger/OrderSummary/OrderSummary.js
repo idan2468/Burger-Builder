@@ -7,7 +7,7 @@ const orderSummary = (props) => {
     let ingredientsItems = Object.keys(props.ingredients).map(key => {
         return (
             <div className={styles.dotDiv} key={key}>
-                <li className={styles.liElement}><span>{key}</span> <span>{props.ingredients[key]}</span></li>
+                <li className={styles.liElement}><span>{key}</span> <span>{props.ingredients[key].count}</span></li>
             </div>
         )
     })

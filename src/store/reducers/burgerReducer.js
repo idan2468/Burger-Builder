@@ -1,5 +1,6 @@
 import * as actionsTypes from '../actions/actionsTypes';
 import {updateObject} from '../utilities';
+import produce from "immer";
 
 const ingredientsPrices = {
     'cheese': 1,
@@ -17,12 +18,12 @@ const initialState = {
 
 
 function changeIngCount(action, state) {
-    let itemChange = action.value - state.ingredients[action.ingredient];
-    let newPrice = state.price + itemChange * ingredientsPrices[action.ingredient];
-    return updateObject(state, {
-        ingredients: {...state.ingredients, [action.ingredient]: action.value},
-        price: newPrice
-    })
+    let itemChange = action.value - state.ingredients[action.ingredient].count;
+    let newPrice = state.price + itemChange * state.ingredients[action.ingredient].price;
+    return produce(state, (draftState) => {
+        draftState.price = newPrice;
+        draftState.ingredients[action.ingredient].count = action.value;
+    });
 }
 
 const burgerReducer = (state = initialState, action) => {

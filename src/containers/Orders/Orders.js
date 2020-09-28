@@ -10,12 +10,12 @@ class Orders extends Component {
     }
     getOrders = () => {
         return this.state.orders.map((order, index) => {
-            let ingredients = {};
-            Object.keys(order.burgerIngredients).forEach(key => {
+            let ingredients = Object.keys(order.burgerIngredients).reduce((obj, key) => {
                 if (order.burgerIngredients[key] !== 0) {
-                    ingredients[key] = order.burgerIngredients[key]
+                    obj[key] = order.burgerIngredients[key]
                 }
-            })
+                return obj;
+            }, {});
             return (
                 <Order ingredients={ingredients} name={order.customer.fullName} price={order.price}
                        key={order._id}/>

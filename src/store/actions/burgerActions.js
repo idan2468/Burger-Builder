@@ -23,7 +23,7 @@ export const initIngredients = () => {
             let fetchedIngredients = {};
             let ingredients = await axios.get('/ingredients');
             ingredients.data.map(ingredient => {
-                fetchedIngredients[ingredient.name] = 0;
+                fetchedIngredients[ingredient.name] = {count: 0, price: ingredient.price, label: ingredient.label};
                 return null;
             });
             return dispatch(fetchIngredients(fetchedIngredients));

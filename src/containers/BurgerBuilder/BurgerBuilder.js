@@ -21,8 +21,6 @@ const ingredientsPrices = {
 
 class BurgerBuilder extends Component {
     state = {
-        // price: 0, // redux
-        // loading: false,
         ordered: false
     };
 

@@ -109,11 +109,16 @@ class ContactDetails extends Component {
     submitHandler = async (event) => {
         let customer = this.generateCustomers();
         event.preventDefault();
+        console.log(this.props.ingredients)
+        let ingredientsCount = Object.keys(this.props.ingredients).reduce((obj, ing) => {
+            obj[ing] = this.props.ingredients[ing].count;
+            return obj;
+        }, {});
         try {
             this.timeOutSpinner = setTimeout(() => this.setState({loading: true}), 500);
             await axios.put('/order', {
                 price: this.props.price,
-                ingredients: this.props.ingredients,
+                ingredients: ingredientsCount,
                 customer: customer
             })
             // await new Promise(resolve => setTimeout(() => resolve(), 2000)); delay for showing the spinner

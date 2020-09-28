@@ -7,10 +7,10 @@ const checkoutSummary = (props) => {
     let ingredients = null;
     if (props.ingredients) {
         ingredients = Object.keys(props.ingredients).map(key => {
-            return props.ingredients[key] === 0 ? null : (
+            return props.ingredients[key].count === 0 ? null : (
                 <Fragment key={key}>
                     <h3 className={styles.ingredientsCol1}>{key}</h3>
-                    <h3 className={styles.ingredientsCol2}>{props.ingredients[key]}</h3>
+                    <h3 className={styles.ingredientsCol2}>{props.ingredients[key].count}</h3>
                 </Fragment>
             )
         })

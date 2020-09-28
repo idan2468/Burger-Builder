@@ -10,7 +10,7 @@ const burger = (props) => {
     if (props.ingredients) {
         ingredientsArray = Object.keys(props.ingredients).map((key, i) => {
             const ingredientsElements = [];
-            for (let j = 0; j < props.ingredients[key]; j++) {
+            for (let j = 0; j < props.ingredients[key].count; j++) {
                 ingredientsElements.push(<BurgerIngredients type={key} key={key + j}/>);
             }
             return ingredientsElements;
