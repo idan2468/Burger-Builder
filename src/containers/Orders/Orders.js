@@ -6,7 +6,8 @@ import axios from "axios";
 
 class Orders extends Component {
     state = {
-        orders: []
+        orders: [],
+        loading: true
     }
     getOrders = () => {
         return this.state.orders.map((order, index) => {
@@ -27,7 +28,7 @@ class Orders extends Component {
         try {
             const orders = await axios.get('/orders');
             console.log(orders);
-            this.setState({orders: orders.data});
+            this.setState({orders: orders.data, loading: false});
         } catch (e) {
 
         }
@@ -35,6 +36,9 @@ class Orders extends Component {
 
     render() {
         let orders = this.getOrders();
+        if (orders.length === 0 && !this.state.loading) {
+            orders = <h1>No Orders yet!!</h1>
+        }
         return (
             <Fragment>
                 <div className={styles.ordersContainer}>
