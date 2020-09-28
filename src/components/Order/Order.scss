@@ -1,9 +1,11 @@
 .container * {
   margin: 0;
 }
-.container > h3{
+
+.container > h3 {
   margin-bottom: 1rem;
 }
+
 .ingredientsContainer {
   display: flex;
   flex-flow: column;
@@ -11,6 +13,7 @@
   align-items: center;
   margin-top: 1rem;
 }
+
 .container {
 
   display: flex;
@@ -33,5 +36,5 @@
   margin: 0.5rem 0;
   align-items: center;
   justify-content: space-between;
-  width: 50%;
+  width: 70%;
 }
