@@ -8,7 +8,7 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 import withErrorHandling from "../../hoc/withErrorHandling";
 import {connect} from "react-redux";
-import * as actions from '../../store/actions';
+import * as actions from '../../store/actions/actions';
 
 
 // take prices from DB
@@ -22,44 +22,15 @@ const ingredientsPrices = {
 class BurgerBuilder extends Component {
     state = {
         // price: 0, // redux
-        loading: false,
+        // loading: false,
         ordered: false
     };
 
     async componentDidMount() {
-        let stateIngredients = {};
-        try {
-            let ingredients = await axios.get('/ingredients');
-            ingredients.data.map(ingredient => {
-                stateIngredients[ingredient.name] = 0;
-                return null;
-            })
-            this.setState(prevState => {
-                return {ingredients: stateIngredients};
-            });
-        } catch (e) {
-            console.log(e);
-        }
+        this.props.onInitIngredients();
 
     }
 
-    // calcPrice = (val, ingredient) => {
-    //     let itemChange = val - this.props.ingredients[ingredient];
-    //     return this.props.price + itemChange * ingredientsPrices[ingredient];
-    // }
-
-    // changeIngredientCount = (val, ingredient) => {
-    //     this.setState((prevState, prevProps) => {
-    //         let newIngredients = {...prevState.ingredients};
-    //         if (val >= 0) {
-    //             newIngredients[ingredient] = val;
-    //             return {
-    //                 ingredients: newIngredients,
-    //                 price: this.calcPrice(val, ingredient)
-    //             }
-    //         }
-    //     })
-    // }
     orderHandler = async () => {
         this.setState(prevState => {
             return {
@@ -68,9 +39,6 @@ class BurgerBuilder extends Component {
         })
     }
     goToCheckout = async () => {
-        // let query = Object.keys(this.props.ingredients).map(key =>
-        //     `${encodeURIComponent(key)}=${encodeURIComponent(this.props.ingredients[key])}`).join('&');
-        // query += `&price=${this.props.price}`
         this.props.history.push({pathname: '/checkout'});
     }
     cancelHandler = () => {
@@ -114,11 +82,10 @@ class BurgerBuilder extends Component {
         let modalContent = null;
         if (this.props.ingredients != null) {
             modalContent = this.getOrderSummary();
-
             burgerGUI = this.getBurgerGUI();
         }
-        if (this.state.loading) {
-            modalContent = <LoadingSpinner show={this.state.loading}/>;
+        if (this.props.loading) {
+            modalContent = <LoadingSpinner show={this.props.loading}/>;
         }
         return (
             <Fragment>
@@ -135,18 +102,15 @@ class BurgerBuilder extends Component {
 const mapStateToProps = (state) => {
     return {
         ingredients: state.burger.ingredients,
-        price: state.burger.price
+        price: state.burger.price,
+        error: state.burger.error,
+        loading: state.burger.loading,
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        changeIngredientCount: (val, ing) => dispatch(
-            {
-                type: actions.CHANGE_ING_COUNT,
-                ingredient: ing,
-                value: val
-            }
-        )
+        changeIngredientCount: (val, ing) => dispatch(actions.changeIngCount(val, ing)),
+        onInitIngredients: () => dispatch(actions.initIngredients())
     }
 }
 
