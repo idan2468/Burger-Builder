@@ -101,8 +101,8 @@ class ContactDetails extends Component {
     }
     generateCustomers = () => {
         let customer = {};
-        for (const key in this.state) {
-            customer[key] = this.state[key].value;
+        for (const key in this.state.formDetails) {
+            customer[key] = this.state.formDetails[key].value;
         }
         return customer;
     }
