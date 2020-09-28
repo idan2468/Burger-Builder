@@ -49,8 +49,8 @@ const buildControl = (props) => {
 export default buildControl;
 
 buildControl.propTypes = {
-  count: PropTypes.number,
-  label: PropTypes.string,
-  name: PropTypes.string,
-  onClick: PropTypes.func
+    count: PropTypes.number,
+    label: PropTypes.string,
+    name: PropTypes.string,
+    onClick: PropTypes.func
 }
