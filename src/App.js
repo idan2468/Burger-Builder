@@ -8,6 +8,7 @@ import {Provider} from "react-redux";
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import * as reducers from "./store/reducers/allReducers";
 import thunk from "redux-thunk";
+import ContactDetails from "./containers/ContactDetails/ContactDetails";
 
 // const logger = store => {
 //     return next => {
@@ -37,9 +38,10 @@ class App extends Component {
                     <BrowserRouter>
                         <Layout>
                             <Switch>
+                                <Route path='/checkout/contact-details' component={ContactDetails}/>
                                 <Route path="/checkout" component={Checkout}/>
                                 <Route path="/orders" component={Orders}/>
-                                <Route path={'/'} exact component={BurgerBuilder}/>
+                                <Route path='/' component={BurgerBuilder}/>
                             </Switch>
                         </Layout>
                     </BrowserRouter>
