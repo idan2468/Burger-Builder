@@ -7,21 +7,21 @@ import ContactDetails from "../ContactDetails/ContactDetails";
 import {connect} from "react-redux";
 
 class Checkout extends Component {
-    state = {
-        // ingredients: {}, // redux
-        // price: null // redux
-    }
-
-    componentWillMount() {
-        // let ingredientsArr = this.props.location.search.slice(1).split('&');
-        // let price = +ingredientsArr.pop().split('=')[1];
-        // const ingredients = {}
-        // for (let ing of ingredientsArr) {
-        //     let ingName = ing.split('=')[0];
-        //     ingredients[ingName] = +ing.split('=')[1];
-        // }
-        // this.setState({ingredients: ingredients, price: price})
-    }
+    // state = {
+    //     // ingredients: {}, // redux
+    //     // price: null // redux
+    // }
+    //
+    // componentWillMount() {
+    //     // let ingredientsArr = this.props.location.search.slice(1).split('&');
+    //     // let price = +ingredientsArr.pop().split('=')[1];
+    //     // const ingredients = {}
+    //     // for (let ing of ingredientsArr) {
+    //     //     let ingName = ing.split('=')[0];
+    //     //     ingredients[ingName] = +ing.split('=')[1];
+    //     // }
+    //     // this.setState({ingredients: ingredients, price: price})
+    // }
 
     orderHandler = async () => {
         this.props.history.push('/checkout/contact-details');
