@@ -39,20 +39,23 @@ class Orders extends Component {
 
     render() {
         let orders = this.getOrders();
+        let content = <div className={styles.ordersContainer}>
+            {orders}
+        </div>
         if (this.props.orders.length === 0 && !this.props.loading) {
-            orders = <h1>No Orders yet!!</h1>;
+            content = <h1>No Orders yet!!</h1>;
         }
         if (this.props.loading) {
-            orders = <LoadingSpinner/>;
+            content = <LoadingSpinner/>;
         }
         if (this.props.error) {
-            orders = <h1 style={{textAlign: 'center'}}>{this.props.error}</h1>;
+            content = <h1 style={{textAlign: 'center'}}>{this.props.error}</h1>;
         }
         return (
             <Fragment>
-                <div className={styles.ordersContainer}>
-                    {orders}
-                </div>
+                {/*<div className={styles.ordersContainer}>*/}
+                {content}
+                {/*</div>*/}
             </Fragment>
         )
     }
