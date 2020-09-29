@@ -1,2 +1,2 @@
 export {burgerReducer} from "./burgerReducer";
-export {orderReducer} from './ordersReducers';
+export {orderReducer} from './ordersReducer';
