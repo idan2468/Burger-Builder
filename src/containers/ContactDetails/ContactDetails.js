@@ -1,11 +1,14 @@
 import React, {Component, Fragment} from 'react';
 import Button from "../../components/UI/Button/Button";
 import styles from './ContactDetails.scss';
-import axios from "axios";
 import {withRouter} from "react-router";
 import Input from "../../components/UI/Input/Input";
 import validator from "validator";
 import {connect} from "react-redux";
+import withErrorHandling from "../../hoc/withErrorHandling";
+import * as actions from '../../store/actions/actions'
+import axios from "axios";
+import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 
 class ContactDetails extends Component {
     state = {
@@ -99,7 +102,7 @@ class ContactDetails extends Component {
         isFormValid: false,
         loading: false
     }
-    generateCustomers = () => {
+    generateCustomer = () => {
         let customer = {};
         for (const key in this.state.formDetails) {
             customer[key] = this.state.formDetails[key].value;
@@ -107,30 +110,25 @@ class ContactDetails extends Component {
         return customer;
     }
     submitHandler = async (event) => {
-        let customer = this.generateCustomers();
         event.preventDefault();
+        let customer = this.generateCustomer();
         console.log(this.props.ingredients)
         let ingredientsCount = Object.keys(this.props.ingredients).reduce((obj, ing) => {
             obj[ing] = this.props.ingredients[ing].count;
             return obj;
         }, {});
-        try {
-            this.timeOutSpinner = setTimeout(() => this.setState({loading: true}), 500);
-            await axios.put('/order', {
-                price: this.props.price,
-                ingredients: ingredientsCount,
-                customer: customer
-            })
-            // await new Promise(resolve => setTimeout(() => resolve(), 2000)); delay for showing the spinner
-        } catch (error) {
-
-        }
-        this.props.history.replace('/');
+        await this.props.createOrder({
+            customer: customer,
+            ingredientsCount: ingredientsCount,
+            price: this.props.price
+        });
         return null
     }
 
-    componentWillUnmount() {
-        clearTimeout(this.timeOutSpinner);
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (!this.props.error && this.props.orderCreatedSuccessfully) {
+            this.props.history.replace('/');
+        }
     }
 
     generateForm = () => {
@@ -163,14 +161,20 @@ class ContactDetails extends Component {
 
     render() {
         let generatedForm = this.generateForm();
+        let content = (
+            <form className={styles.formContainer} onSubmit={this.submitHandler}>
+                <h2>Enter your details:</h2>
+                {generatedForm}
+                <Button type={'ok'} text={'Confirm'} extraStyle={styles.buttonConfirm}
+                        disabled={!this.state.isFormValid}/>
+            </form>
+        );
+        if (this.props.loading) {
+            content = <LoadingSpinner/>
+        }
         return (
             <Fragment>
-                <form className={styles.formContainer} onSubmit={this.submitHandler}>
-                    <h2>Enter your details:</h2>
-                    {generatedForm}
-                    <Button type={'ok'} text={'Confirm'} extraStyle={styles.buttonConfirm}
-                            disabled={!this.state.isFormValid}/>
-                </form>
+                {content}
             </Fragment>
         )
     }
@@ -179,9 +183,16 @@ class ContactDetails extends Component {
 const mapStateToProps = (state) => {
     return {
         ingredients: state.burger.ingredients,
-        price: state.burger.price
+        price: state.burger.price,
+        loading: state.order.loading,
+        orderCreatedSuccessfully: state.order.orderCreatedSuccessfully
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createOrder: async (payload) => dispatch(actions.createOrder(payload))
     }
 }
 
 
-export default connect(mapStateToProps)(withRouter(ContactDetails));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withErrorHandling(ContactDetails, axios)));
