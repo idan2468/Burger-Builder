@@ -1,107 +1,64 @@
-import React, {Component, Fragment} from 'react';
+import React, {Fragment} from 'react';
 import Button from "../../components/UI/Button/Button";
 import styles from './ContactDetails.scss';
 import {withRouter} from "react-router";
-import Input from "../../components/UI/Input/Input";
 import validator from "validator";
 import {connect} from "react-redux";
 import withErrorHandling from "../../hoc/withErrorHandling";
 import * as actions from '../../store/actions/actions'
 import axios from "axios";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
+import Form from "../../components/UI/Form/Form";
 
-class ContactDetails extends Component {
-    state = {
-        formDetails: {
+class ContactDetails extends Form {
+    constructor(props) {
+        super(props, {
             fullName: {
-                value: '',
-                config: {
-                    name: 'fullName',
-                    label: 'Full Name',
-                    placeholder: 'Enter Your Name',
-                    type: 'text',
-                    valid: true
-                },
-                isValid() {
-                    return validator.isAlpha(this.value.replaceAll(' ', '')) && !validator.isEmpty(this.value)
-                },
-                touched: false
+                name: 'fullName',
+                label: 'Full Name',
+                placeholder: 'Enter Your Name',
+                type: 'text',
+                isValid: (value) => validator.isAlpha(value.replaceAll(' ', '')) && !validator.isEmpty(value)
             },
             email: {
-                value: '',
-                config: {
-                    name: 'email',
-                    label: 'Email',
-                    placeholder: 'Enter Your Email',
-                    type: 'email',
-                    valid: true
-                },
-                isValid() {
-                    return validator.isEmail(this.value)
-                },
-                touched: false
+                name: 'email',
+                label: 'Email',
+                placeholder: 'Enter Your Email',
+                type: 'email',
+                isValid: (value) => validator.isEmail(value)
             },
             payMethod: {
-                value: 'Credit Card',
-                config: {
-                    name: 'payMethod',
-                    label: 'Pay Method',
-                    options: ['Credit Card', 'Cash'],
-                    type: 'text',
-                    inputType: 'select',
-                    valid: true
-                },
-                isValid() {
-                    return true
-                },
-                touched: true
+                name: 'payMethod',
+                label: 'Pay Method',
+                options: ['Credit Card', 'Cash'],
+                type: 'text',
+                inputType: 'select',
+                isValid: (value) => validator.isLength(value, {min: 8})
             },
             street: {
-                value: '',
-                config: {
-                    name: 'street',
-                    label: 'Street',
-                    placeholder: 'Enter Your Street',
-                    type: 'text',
-                    valid: true
-                },
-                isValid() {
-                    return validator.isAlphanumeric(this.value.replaceAll(' ', '')) && !validator.isEmpty(this.value)
-                },
-                touched: false
+                name: 'street',
+                label: 'Street',
+                placeholder: 'Enter Your Street',
+                type: 'text',
+                isValid: (value) => validator.isAlphanumeric(value.replaceAll(' ', '')) && !validator.isEmpty(value)
             },
             postalCode: {
-                value: '',
-                config: {
-                    name: 'postalCode',
-                    label: 'Postal Code',
-                    placeholder: 'Enter Postal Code',
-                    type: 'number',
-                    valid: true
-                },
-                isValid() {
-                    return validator.isNumeric(this.value)
-                },
-                touched: false
+                name: 'postalCode',
+                label: 'Postal Code',
+                placeholder: 'Enter Postal Code',
+                type: 'number',
+                isValid: (value) => validator.isNumeric(value)
             },
             city: {
-                value: '',
-                config: {
-                    name: 'city',
-                    label: 'City',
-                    placeholder: 'Enter Your City',
-                    type: 'text',
-                    valid: true
-                },
-                isValid() {
-                    return !validator.isEmpty(this.value)
-                },
-                touched: false
-            }
-        },
-        isFormValid: false,
-        loading: false
+                name: 'city',
+                label: 'City',
+                placeholder: 'Enter Your City',
+                type: 'text',
+                isValid: (value) => !validator.isEmpty(value)
+            },
+        });
     }
+
     generateCustomer = () => {
         let customer = {};
         for (const key in this.state.formDetails) {
@@ -129,34 +86,6 @@ class ContactDetails extends Component {
         if (!this.props.error && this.props.orderCreatedSuccessfully) {
             this.props.history.replace('/');
         }
-    }
-
-    generateForm = () => {
-        let inputs = [];
-        for (const key in this.state.formDetails) {
-            inputs.push(<Input {...this.state.formDetails[key].config}
-                               onChange={(event) => this.onChangeHandler(event, key)}
-                               value={this.state.formDetails[key].value} key={key}/>)
-        }
-        return inputs;
-    }
-    isFormValid = (updatedFormDetails) => {
-        let isValid = true;
-        for (const key in updatedFormDetails) {
-            isValid = isValid && updatedFormDetails[key].config.valid && updatedFormDetails[key].touched;
-        }
-        return isValid;
-    }
-
-    onChangeHandler(event, key) {
-        let updatedFormDetails = {...this.state.formDetails};
-        let keyToChange = {...this.state.formDetails[key]};
-        keyToChange.value = event.target.value;
-        keyToChange.config.valid = keyToChange.isValid();
-        keyToChange.touched = true;
-        updatedFormDetails[key] = keyToChange;
-        let isFormValid = this.isFormValid(updatedFormDetails);
-        this.setState({formDetails: updatedFormDetails, isFormValid: isFormValid});
     }
 
     render() {

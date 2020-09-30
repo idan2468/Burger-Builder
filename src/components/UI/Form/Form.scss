@@ -1,0 +1,14 @@
+.formContainer {
+  display: grid;
+  grid-row-gap: 1rem;
+  justify-content: center;
+}
+
+.formContainer h2, .formContainer h4 {
+  margin: 0;
+  padding: 0;
+}
+
+.buttonConfirm {
+  margin: .5rem 0;
+}
