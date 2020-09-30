@@ -83,7 +83,13 @@ class ContactDetails extends Form {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (!this.props.error && this.props.orderCreatedSuccessfully || !this.props.ingredients) {
+        if ((!this.props.error && this.props.orderCreatedSuccessfully) || !this.props.ingredients) {
+            this.props.history.replace('/');
+        }
+    }
+
+    componentDidMount() {
+        if (!this.props.ingredients) {
             this.props.history.replace('/');
         }
     }
