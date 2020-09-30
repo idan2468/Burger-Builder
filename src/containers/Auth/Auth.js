@@ -5,6 +5,9 @@ import {connect} from "react-redux";
 import * as actions from "../../store/actions/actions";
 import Form from "../../components/UI/Form/Form";
 import validator from "validator";
+import styles from "../../components/UI/Form/Form.scss";
+import Button from "../../components/UI/Button/Button";
+import React, {Fragment} from "react";
 
 class Auth extends Form {
     constructor(props) {
@@ -42,7 +45,19 @@ class Auth extends Form {
     }
 
     render() {
-        return super.render();
+        let generatedForm = this.generateForm();
+        let content = (
+            <form className={styles.formContainer} onSubmit={this.submitHandler}>
+                <h2>Enter your details:</h2>
+                {generatedForm}
+                <Button type={'ok'} text={'Login'} disabled={!this.state.isFormValid}/>
+            </form>
+        )
+        return (
+            <Fragment>
+                {content}
+            </Fragment>
+        );
     }
 
 }

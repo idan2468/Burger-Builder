@@ -1,6 +1,4 @@
-import React, {Component, Fragment} from 'react';
-import styles from "./Form.scss";
-import Button from "../Button/Button";
+import React, {Component} from 'react';
 import Input from "../Input/Input";
 
 class Form extends Component {
@@ -69,22 +67,6 @@ class Form extends Component {
     }
     submitHandler = async (event) => {
         return null
-    }
-
-    render() {
-        let generatedForm = this.generateForm();
-        let content = (
-            <form className={styles.formContainer} onSubmit={this.submitHandler}>
-                <h2>Enter your details:</h2>
-                {generatedForm}
-                <Button type={'ok'} text={'Login'} disabled={!this.state.isFormValid}/>
-            </form>
-        )
-        return (
-            <Fragment>
-                {content}
-            </Fragment>
-        );
     }
 }
 
