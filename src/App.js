@@ -9,6 +9,7 @@ import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import * as reducers from "./store/reducers/allReducers";
 import thunk from "redux-thunk";
 import ContactDetails from "./containers/ContactDetails/ContactDetails";
+import Auth from "./containers/Auth/Auth";
 
 // const logger = store => {
 //     return next => {
@@ -26,7 +27,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     burger: reducers.burgerReducer,
-    order: reducers.orderReducer
+    order: reducers.orderReducer,
+    auth: reducers.authReducer
 });
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
@@ -41,6 +43,7 @@ class App extends Component {
                                 <Route path='/checkout/contact-details' component={ContactDetails}/>
                                 <Route path="/checkout" component={Checkout}/>
                                 <Route path="/orders" component={Orders}/>
+                                <Route path="/auth" component={Auth}/>
                                 <Route path='/' component={BurgerBuilder}/>
                             </Switch>
                         </Layout>

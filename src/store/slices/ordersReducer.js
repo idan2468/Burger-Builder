@@ -12,15 +12,15 @@ export const fetchOrders = createAsyncThunk('FETCH_ORDER',
         }
     });
 export const createOrder = createAsyncThunk('CREATE_ORDER',
-    async (payload, {rejectWithValue}) => {
+    async ({ingredientsCount, price, customer}, {rejectWithValue}) => {
         try {
             await axios.put('/order', {
-                price: payload.price,
-                ingredients: payload.ingredientsCount,
-                customer: payload.customer
+                price: price,
+                ingredients: ingredientsCount,
+                customer: customer
             })
         } catch (error) {
-            return rejectWithValue('Failed saving the order!')
+            return rejectWithValue(error.message)
         }
     });
 
