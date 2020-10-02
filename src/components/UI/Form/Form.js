@@ -66,6 +66,25 @@ class Form extends Component {
         this.setState({formDetails: updatedFormDetails, isFormValid: isFormValid});
     }
 
+    clearInput(updatedFormDetails, key) {
+        let keyToChange = {...this.state.formDetails[key]};
+        keyToChange.value = '';
+        keyToChange.config.valid = true;
+        keyToChange.touched = false;
+        updatedFormDetails[key] = keyToChange;
+    }
+
+    cleanForm() {
+        /**
+         * Quick workaround for cleaning the form
+         */
+        let updatedFormDetails = {...this.state.formDetails};
+        for (const key in this.state.formDetails) {
+            this.clearInput(updatedFormDetails, key);
+        }
+        this.setState({formDetails: updatedFormDetails});
+    }
+
     generateForm() {
         let inputs = [];
         for (const key in this.state.formDetails) {
