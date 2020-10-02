@@ -5,20 +5,13 @@ import {connect} from "react-redux";
 import * as actions from "../../store/actions/actions";
 import Form from "../../components/UI/Form/Form";
 import validator from "validator";
-import styles from "../../components/UI/Form/Form.scss";
+import styles from "./Auth.scss";
 import Button from "../../components/UI/Button/Button";
 import React, {Fragment} from "react";
 
 class Auth extends Form {
     constructor(props) {
         super(props, {
-            email: {
-                name: 'email',
-                label: 'Email',
-                placeholder: 'Enter Your Email',
-                type: 'email',
-                isValid: (value) => validator.isEmail(value)
-            },
             username: {
                 name: 'username',
                 label: 'Username',
@@ -33,7 +26,15 @@ class Auth extends Form {
                 type: 'password',
                 isValid: (value) => validator.isLength(value, {min: 8})
             },
+            email: {
+                name: 'email',
+                label: 'Email',
+                placeholder: 'Enter Your Email',
+                type: 'email',
+                isValid: (value) => validator.isEmail(value)
+            },
         });
+        this.state.isLogin = false;
     }
 
 
@@ -41,17 +42,41 @@ class Auth extends Form {
         event.preventDefault();
         const username = this.state.formDetails.username.value;
         const password = this.state.formDetails.password.value;
-        await this.props.loginHandler({username: username, password: password})
+        const email = this.state.formDetails.email.value;
+        if (this.state.isLogin) {
+            await this.props.loginHandler({username: username, password: password});
+            this.props.history.replace('/');
+        } else {
+            await this.props.registerHandler({username: username, password: password, email: email});
+            this.changeAuthMode();
+        }
+    }
+
+    changeAuthMode = () => {
+        // Changing to login mode
+        if (!this.state.isLogin) {
+            super.disableField('email');
+        }
+        // Changing to signup mode
+        else {
+            super.enableField('email');
+        }
+        this.setState({isLogin: !this.state.isLogin});
     }
 
     render() {
         let generatedForm = this.generateForm();
         let content = (
-            <form className={styles.formContainer} onSubmit={this.submitHandler}>
-                <h2>Enter your details:</h2>
-                {generatedForm}
-                <Button type={'ok'} text={'Login'} disabled={!this.state.isFormValid}/>
-            </form>
+            <Fragment>
+                <form className={styles.formContainer} onSubmit={this.submitHandler}>
+                    <h2>Enter your details:</h2>
+                    {generatedForm}
+                    <Button type={'ok'} text={this.state.isLogin ? 'Login' : 'Signup'}
+                            disabled={!this.state.isFormValid}/>
+                    <Button type={'ok'} text={`Switch to ${!this.state.isLogin ? 'Login' : 'Signup'}`}
+                            onClick={this.changeAuthMode} extraStyle={styles.switchModeBtn} buttonType={'button'}/>
+                </form>
+            </Fragment>
         )
         return (
             <Fragment>
@@ -60,11 +85,13 @@ class Auth extends Form {
         );
     }
 
+
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loginHandler: async (payload) => dispatch(actions.loginHandler(payload))
+        loginHandler: async (payload) => dispatch(actions.loginHandler(payload)),
+        registerHandler: async (payload) => dispatch(actions.registerHandler(payload))
     }
 }
 
