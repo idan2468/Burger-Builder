@@ -4,6 +4,7 @@ import styles from './Orders.scss';
 import * as actions from "../../store/actions/actions";
 import {connect} from "react-redux";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
+import {withRouter} from "react-router";
 
 
 class Orders extends Component {
@@ -27,14 +28,11 @@ class Orders extends Component {
     }
 
     async componentDidMount() {
-        this.props.fetchOrders();
-        // try {
-        //     const orders = await axios.get('/orders');
-        //     console.log(orders);
-        //     this.setState({orders: orders.data, loading: false});
-        // } catch (e) {
-        //
-        // }
+        if (this.props.isAuth) {
+            this.props.fetchOrders();
+        } else {
+            this.props.history.replace('/auth');
+        }
     }
 
     render() {
@@ -65,7 +63,8 @@ const mapStateToProps = (state) => {
     return {
         orders: state.order.orders,
         error: state.order.error,
-        loading: state.order.loading
+        loading: state.order.loading,
+        isAuth: state.auth.logon,
     }
 }
 
@@ -76,4 +75,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Orders);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Orders));
