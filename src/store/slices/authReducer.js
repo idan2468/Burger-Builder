@@ -2,11 +2,11 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import axios from "axios";
 
 export const loginHandler = createAsyncThunk('LOGIN_HANDLER',
-    async ({username, password}, {rejectWithValue}) => {
+    async ({username, password}, {rejectWithValue, dispatch}) => {
         try {
             // await new Promise(resolve => setTimeout(() => resolve(), 2000));
             const res = await axios.post('/login', {username: username, password: password});
-            console.dir(res);
+            dispatch(logout({expireTime: res.data.expiresIn}));
             return res.data.token;
         } catch (e) {
             return rejectWithValue(e.message);
@@ -17,12 +17,17 @@ export const registerHandler = createAsyncThunk('REGISTER_HANDLER',
         try {
             // await new Promise(resolve => setTimeout(() => resolve(), 2000));
             const res = await axios.post('/register', {username: username, password: password, email: email});
-            console.dir(res);
             return res.data.token;
         } catch (e) {
             return rejectWithValue(e.message);
         }
     });
+
+export const logout = createAsyncThunk('LOGOUT', async ({expireTime}) => {
+    console.log(expireTime);
+    await new Promise(resolve => setTimeout(() => resolve(), expireTime));
+    return null;
+})
 
 const initialState = {
     token: null,
@@ -38,14 +43,17 @@ const login = createSlice({
     extraReducers: {
         [loginHandler.pending]: (state) => {
             state.loading = true;
+            state.logon = false;
         },
         [loginHandler.fulfilled]: (state, action) => {
             state.token = action.payload;
             state.loading = false;
+            state.logon = true;
         },
         [loginHandler.rejected]: (state, action) => {
             state.error = action.payload;
             state.loading = false;
+            state.logon = false;
         },
         [registerHandler.pending]: (state) => {
             state.loading = true;
@@ -58,6 +66,10 @@ const login = createSlice({
             state.error = action.payload;
             state.loading = false;
         },
+        [logout.fulfilled]: (state, action) => {
+            state.logon = false;
+            state.token = null;
+        }
     }
 });
 

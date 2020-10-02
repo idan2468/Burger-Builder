@@ -2,22 +2,23 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import axios from "axios";
 
 export const fetchOrders = createAsyncThunk('FETCH_ORDER',
-    async (payload, {rejectWithValue}) => {
+    async (payload, {rejectWithValue, getState}) => {
         try {
             // await new Promise(resolve => setTimeout(() => resolve(), 2000));
-            const orders = await axios.get('/orders');
+            const orders = await axios.post('/orders', {token: getState().auth.token});
             return orders.data;
         } catch (e) {
             return rejectWithValue('Error fetching orders.');
         }
     });
 export const createOrder = createAsyncThunk('CREATE_ORDER',
-    async ({ingredientsCount, price, customer}, {rejectWithValue}) => {
+    async ({ingredientsCount, price, customer}, {rejectWithValue, getState}) => {
         try {
             await axios.put('/order', {
                 price: price,
                 ingredients: ingredientsCount,
-                customer: customer
+                customer: customer,
+                token: getState().auth.token
             })
         } catch (error) {
             return rejectWithValue(error.message)
@@ -38,6 +39,7 @@ const orders = createSlice({
     extraReducers: {
         [fetchOrders.pending]: (state) => {
             state.loading = true;
+            state.error = null;
         },
         [fetchOrders.fulfilled]: (state, action) => {
             state.orders = action.payload;
@@ -50,6 +52,7 @@ const orders = createSlice({
         [createOrder.pending]: (state) => {
             state.loading = true;
             state.orderCreatedSuccessfully = false;
+            state.error = null;
         },
         [createOrder.fulfilled]: (state, action) => {
             state.loading = false;

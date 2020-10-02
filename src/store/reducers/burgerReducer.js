@@ -2,12 +2,6 @@ import * as actionsTypes from '../actions/actionsTypes';
 import {updateObject} from '../utilities';
 import produce from "immer";
 
-// const ingredientsPrices = {
-//     'cheese': 1,
-//     'salad': 2,
-//     'bacon': 3,
-//     'meat': 4,
-// }
 
 const initialState = {
     ingredients: null,
@@ -31,7 +25,7 @@ export const burgerReducer = (state = initialState, action) => {
         case actionsTypes.CHANGE_ING_COUNT:
             return changeIngCount(action, state);
         case actionsTypes.FETCH_INGREDIENTS:
-            return updateObject(state, action.payload);
+            return updateObject(state, {...action.payload, price: 0});
         case actionsTypes.FETCH_INGREDIENTS_FAILED:
             return updateObject(state, action.payload);
         case actionsTypes.FETCH_INGREDIENTS_PENDING:
