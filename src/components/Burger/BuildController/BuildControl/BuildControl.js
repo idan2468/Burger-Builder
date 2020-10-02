@@ -35,7 +35,7 @@ const buildControl = (props) => {
                 <label className={styles.labelStyle}>{props.label ? props.label : props.name}</label>
                 <div className={styles.controlsDiv}>
                     <a onClick={() => plusHandler()} className={styles.controlPlus}>+</a>
-                    <input type="text" className={styles.inputCount} value={props.count} ref={inputCountRef}
+                    <input type="number" className={styles.inputCount} value={props.count} ref={inputCountRef}
                            onChange={(event) => props.onClick(Number(event.target.value), props.name)}
                            onKeyDown={deleteEventHandler}/>
                     <a onClick={() => minusHandler()}
