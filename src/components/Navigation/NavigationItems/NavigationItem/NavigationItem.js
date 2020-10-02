@@ -11,7 +11,7 @@ const navigationItem = (props) => {
     return (
         <Fragment>
             <NavLink to={props.link} activeClassName={styles.linkActive} exact
-                     className={linkStyles.join(' ')}>{props.children}</NavLink>
+                     className={linkStyles.join(' ')} onClick={props.onClick}>{props.children}</NavLink>
         </Fragment>
     )
 }
