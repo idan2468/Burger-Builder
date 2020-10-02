@@ -5,6 +5,7 @@ class Form extends Component {
     constructor(props, config) {
         super(props);
         this.state = this.buildState(config);
+        this.state.disabledFields = [];
     }
 
     buildState(config) {
@@ -34,10 +35,22 @@ class Form extends Component {
         }, {formDetails: {}, isFormValid: false});
     }
 
+    disableField(field) {
+        let newDisabledFields = this.state.disabledFields.concat([field]);
+        this.setState({disabledFields: newDisabledFields});
+    }
+
+    enableField(field) {
+        let newDisabledFields = this.state.disabledFields.filter(item => item !== field);
+        this.setState({disabledFields: newDisabledFields});
+    }
+
     isFormValid = (updatedFormDetails) => {
         let isValid = true;
         for (const key in updatedFormDetails) {
-            isValid = isValid && updatedFormDetails[key].config.valid && updatedFormDetails[key].touched;
+            if (!this.state.disabledFields.includes(key)) {
+                isValid = isValid && updatedFormDetails[key].config.valid && updatedFormDetails[key].touched;
+            }
         }
         return isValid;
     }
@@ -53,21 +66,21 @@ class Form extends Component {
         this.setState({formDetails: updatedFormDetails, isFormValid: isFormValid});
     }
 
-    generateForm = () => {
+    generateForm() {
         let inputs = [];
         for (const key in this.state.formDetails) {
-            let inputElement = (
-                <Input {...this.state.formDetails[key].config}
-                       onChange={(event) => this.onChangeHandler(event, key)}
-                       value={this.state.formDetails[key].value} key={key}/>
-            )
-            inputs.push(inputElement);
+            if (!this.state.disabledFields.includes(key)) {
+                let inputElement = (
+                    <Input {...this.state.formDetails[key].config}
+                           onChange={(event) => this.onChangeHandler(event, key)}
+                           value={this.state.formDetails[key].value} key={key}/>
+                )
+                inputs.push(inputElement);
+            }
         }
         return inputs;
     }
-    submitHandler = async (event) => {
-        return null
-    }
+
 }
 
 export default Form;
