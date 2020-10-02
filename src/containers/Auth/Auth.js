@@ -8,6 +8,7 @@ import validator from "validator";
 import styles from "./Auth.scss";
 import Button from "../../components/UI/Button/Button";
 import React, {Fragment} from "react";
+import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 
 class Auth extends Form {
     constructor(props) {
@@ -45,10 +46,19 @@ class Auth extends Form {
         const email = this.state.formDetails.email.value;
         if (this.state.isLogin) {
             await this.props.loginHandler({username: username, password: password});
-            this.props.history.replace('/');
         } else {
             await this.props.registerHandler({username: username, password: password, email: email});
             this.changeAuthMode();
+        }
+    }
+
+    componentDidMount() {
+        this.changeAuthMode();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.logon && !this.props.error) {
+            this.props.history.replace('/');
         }
     }
 
@@ -61,6 +71,7 @@ class Auth extends Form {
         else {
             super.enableField('email');
         }
+        super.cleanForm();
         this.setState({isLogin: !this.state.isLogin});
     }
 
@@ -78,6 +89,16 @@ class Auth extends Form {
                 </form>
             </Fragment>
         )
+        if (this.props.loading) {
+            content = <LoadingSpinner/>
+        }
+        if (this.props.error) {
+            content = (
+                <form className={styles.formContainer} onSubmit={this.submitHandler} style={{width: '100%'}}>
+                    <h1>{this.props.error}</h1>
+                </form>
+            )
+        }
         return (
             <Fragment>
                 {content}
@@ -88,6 +109,16 @@ class Auth extends Form {
 
 }
 
+const mapStateToProps = (state) => {
+    return {
+        loading: state.auth.loading,
+        error: state.auth.error,
+        logon: state.auth.logon,
+        token: state.auth.token,
+    }
+}
+
+
 const mapDispatchToProps = (dispatch) => {
     return {
         loginHandler: async (payload) => dispatch(actions.loginHandler(payload)),
@@ -95,4 +126,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(withRouter(withErrorHandling(Auth, axios)));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withErrorHandling(Auth, axios)));
