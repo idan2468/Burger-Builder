@@ -19,7 +19,7 @@ const button = (props) => {
     return (
         <Fragment>
             <button className={buttonStyles.join(' ')} onClick={props.onClick}
-                    disabled={props.disabled}>{props.text}</button>
+                    disabled={props.disabled} type={props.buttonType}>{props.text}</button>
         </Fragment>
     )
 }
@@ -32,7 +32,8 @@ button.propTypes = {
     onClick: PropTypes.func,
     text: PropTypes.string,
     type: PropTypes.string,
-    className: PropTypes.string
+    className: PropTypes.string,
+    buttonType: PropTypes.string
 }
 
 button.defaultProps = {
