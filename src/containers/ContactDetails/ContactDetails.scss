@@ -1,7 +1,7 @@
 .formContainer {
   display: grid;
   grid-row-gap: 1rem;
-  justify-content: center;
+  //justify-content: center;
 }
 
 .formContainer h2, .formContainer h4 {
@@ -11,4 +11,10 @@
 
 .buttonConfirm {
   margin: .5rem 0;
+}
+
+@media (min-width: 500px){
+    .formContainer{
+      justify-content: center;
+    }
 }
