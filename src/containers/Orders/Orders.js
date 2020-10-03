@@ -8,10 +8,6 @@ import {withRouter} from "react-router";
 
 
 class Orders extends Component {
-    state = {
-        // orders: [],
-        // loading: true
-    }
     getOrders = () => {
         return this.props.orders.map((order, index) => {
             let ingredients = Object.keys(order.burgerIngredients).reduce((obj, key) => {
@@ -28,7 +24,7 @@ class Orders extends Component {
     }
 
     async componentDidMount() {
-        this.props.fetchOrders();
+        this.props.fetchOrders(this.props.userId);
     }
 
     render() {
@@ -61,12 +57,13 @@ const mapStateToProps = (state) => {
         error: state.order.error,
         loading: state.order.loading,
         isAuth: state.auth.logon,
+        userId:state.auth.userId
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchOrders: () => dispatch(actions.fetchOrders()),
+        fetchOrders: (userId) => dispatch(actions.fetchOrders(userId)),
     }
 }
 
