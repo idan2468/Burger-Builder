@@ -28,11 +28,7 @@ class Orders extends Component {
     }
 
     async componentDidMount() {
-        if (this.props.isAuth) {
-            this.props.fetchOrders();
-        } else {
-            this.props.history.replace('/auth');
-        }
+        this.props.fetchOrders();
     }
 
     render() {

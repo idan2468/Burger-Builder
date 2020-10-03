@@ -4,10 +4,25 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import axios from 'axios';
+import {applyMiddleware, combineReducers, compose, createStore} from "redux";
+import * as reducers from "./store/reducers/allReducers";
+import thunk from "redux-thunk";
+import {Provider} from "react-redux";
 
 
 axios.defaults.baseURL = "http://localhost:4000";
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+
+const rootReducer = combineReducers({
+    burger: reducers.burgerReducer,
+    order: reducers.orderReducer,
+    auth: reducers.authReducer
+});
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+
+
 // noinspection JSCheckFunctionSignatures
-ReactDOM.render(<App/>, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById('root'));
 registerServiceWorker();

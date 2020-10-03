@@ -4,12 +4,10 @@ import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Checkout from "./containers/Checkout/Checkout";
 import Orders from "./containers/Orders/Orders";
-import {Provider} from "react-redux";
-import {applyMiddleware, combineReducers, compose, createStore} from "redux";
-import * as reducers from "./store/reducers/allReducers";
-import thunk from "redux-thunk";
+import {connect} from "react-redux";
 import ContactDetails from "./containers/ContactDetails/ContactDetails";
 import Auth from "./containers/Auth/Auth";
+import * as actions from './store/actions/actions';
 
 // const logger = store => {
 //     return next => {
@@ -22,36 +20,39 @@ import Auth from "./containers/Auth/Auth";
 //     }
 // }
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-
-const rootReducer = combineReducers({
-    burger: reducers.burgerReducer,
-    order: reducers.orderReducer,
-    auth: reducers.authReducer
-});
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
-
 class App extends Component {
     render() {
+        this.props.checkAuth();
         return (
             <Fragment>
-                <Provider store={store}>
-                    <BrowserRouter>
-                        <Layout>
-                            <Switch>
-                                <Route path='/checkout/contact-details' component={ContactDetails}/>
-                                <Route path="/checkout" component={Checkout}/>
-                                <Route path="/orders" component={Orders}/>
-                                <Route path="/auth" component={Auth}/>
-                                <Route path='/' component={BurgerBuilder}/>
-                            </Switch>
-                        </Layout>
-                    </BrowserRouter>
-                </Provider>
+                <BrowserRouter>
+                    <Layout>
+                        <Switch>
+                            {this.props.isAuth ?
+                                <Route path='/checkout/contact-details' component={ContactDetails}/> : null}
+                            {this.props.isAuth ? <Route path="/checkout" component={Checkout}/> : null}
+                            {this.props.isAuth ? <Route path="/orders" component={Orders}/> : null}
+                            <Route path="/auth" component={Auth}/>
+                            <Route path='/' component={BurgerBuilder}/>
+                        </Switch>
+                    </Layout>
+                </BrowserRouter>
             </Fragment>
         );
     }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        isAuth: state.auth.logon
+    }
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        checkAuth: () => dispatch(actions.checkAuthStatus({}))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
