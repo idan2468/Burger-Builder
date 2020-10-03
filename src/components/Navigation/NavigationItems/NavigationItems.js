@@ -18,7 +18,7 @@ const navigationItems = (props) => {
     let authItem = <NavigationItem link={'/auth'}>Login</NavigationItem>;
     let orders = null;
     if (props.isLogon) {
-        authItem = <NavigationItem onClick={logout}>Logout</NavigationItem>
+        authItem = <NavigationItem link={'/auth'} onClick={logout}>Logout</NavigationItem>
         orders = <NavigationItem link={'/orders'}>Orders</NavigationItem>
 
     }
