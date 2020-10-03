@@ -50,6 +50,7 @@ class Auth extends Form {
             await this.props.registerHandler({username: username, password: password, email: email});
             this.changeAuthMode();
         }
+
     }
 
     componentDidMount() {
@@ -57,7 +58,12 @@ class Auth extends Form {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.logon && !this.props.error) {
+        // if (this.props.logon && !this.props.error) {
+        //     this.props.history.replace('/');
+        // }
+        if (this.props.ordered && this.props.isAuth) {
+            this.props.history.replace('/checkout');
+        } else if (this.props.isAuth) {
             this.props.history.replace('/');
         }
     }
@@ -113,8 +119,9 @@ const mapStateToProps = (state) => {
     return {
         loading: state.auth.loading,
         error: state.auth.error,
-        logon: state.auth.logon,
         token: state.auth.token,
+        ordered: state.burger.ordered,
+        isAuth: state.auth.logon,
     }
 }
 
