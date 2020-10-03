@@ -11,10 +11,9 @@ import {connect} from "react-redux";
 import * as actions from '../../store/actions/actions';
 
 
-
 class BurgerBuilder extends Component {
     state = {
-        ordered: false
+        showModal: false
     };
 
     async componentDidMount() {
@@ -23,11 +22,16 @@ class BurgerBuilder extends Component {
     }
 
     orderHandler = async () => {
-        this.setState(prevState => {
-            return {
-                ordered: true
-            }
-        })
+        this.props.setOrdered(true);
+        if (!this.props.isAuth) {
+            this.props.history.replace('/auth');
+        } else {
+            this.setState(prevState => {
+                return {
+                    showModal: true
+                }
+            })
+        }
     }
     goToCheckout = async () => {
         this.props.history.push({pathname: '/checkout'});
@@ -35,9 +39,10 @@ class BurgerBuilder extends Component {
     cancelHandler = () => {
         this.setState(prevState => {
             return {
-                ordered: false
+                showModal: false
             }
         })
+        this.props.setOrdered(false);
     }
     getOrderSummary = () => {
         return (
@@ -80,7 +85,7 @@ class BurgerBuilder extends Component {
         }
         return (
             <Fragment>
-                <Modal openModal={this.state.ordered} onClick={this.cancelHandler}>
+                <Modal openModal={this.state.showModal} onClick={this.cancelHandler}>
                     {modalContent}
                 </Modal>
                 {burgerGUI}
@@ -96,12 +101,16 @@ const mapStateToProps = (state) => {
         price: state.burger.price,
         error: state.burger.error,
         loading: state.burger.loading,
+        isAuth: state.auth.logon,
+        ordered: state.burger.ordered,
     }
 }
+
 const mapDispatchToProps = (dispatch) => {
     return {
         changeIngredientCount: (val, ing) => dispatch(actions.changeIngCount(val, ing)),
-        onInitIngredients: () => dispatch(actions.initIngredients())
+        onInitIngredients: () => dispatch(actions.initIngredients()),
+        setOrdered: (isOrdered) => dispatch(actions.setOrdered(isOrdered)),
     }
 }
 
