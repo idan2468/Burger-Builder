@@ -51,7 +51,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        checkAuth: () => dispatch(actions.checkAuthStatus({}))
+        checkAuth: () => dispatch(actions.checkAuthStatus())
     }
 }
 
