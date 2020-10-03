@@ -77,7 +77,8 @@ class ContactDetails extends Form {
         await this.props.createOrder({
             customer: customer,
             ingredientsCount: ingredientsCount,
-            price: this.props.price
+            price: this.props.price,
+            userId: this.props.userId
         });
         return null
     }
@@ -120,7 +121,8 @@ const mapStateToProps = (state) => {
         ingredients: state.burger.ingredients,
         price: state.burger.price,
         loading: state.order.loading,
-        orderCreatedSuccessfully: state.order.orderCreatedSuccessfully
+        orderCreatedSuccessfully: state.order.orderCreatedSuccessfully,
+        userId: state.auth.userId,
     }
 }
 const mapDispatchToProps = (dispatch) => {
