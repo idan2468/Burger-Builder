@@ -15,6 +15,7 @@ const navigationItems = (props) => {
     if (props.side) {
         containerStyle = styles.sideContainer
     }
+
     let authItem = <NavigationItem link={'/auth'}>Login</NavigationItem>;
     let orders = null;
     if (props.isLogon) {

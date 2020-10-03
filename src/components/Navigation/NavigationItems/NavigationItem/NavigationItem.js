@@ -20,5 +20,6 @@ export default navigationItem;
 
 navigationItem.propTypes = {
     active: PropTypes.bool,
-    link: PropTypes.string
+    link: PropTypes.string,
+    onClick: PropTypes.func
 }

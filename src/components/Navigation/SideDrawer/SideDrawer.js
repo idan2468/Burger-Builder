@@ -14,7 +14,7 @@ const sideDrawer = (props) => {
     return (
         <Fragment>
             <Backdrop show={props.show} onClick={props.onClick}/>
-            <div className={sliderStyles.join(' ')}>
+            <div className={sliderStyles.join(' ')} onClick={props.onClick}>
                 <NavigationItems side/>
             </div>
         </Fragment>
