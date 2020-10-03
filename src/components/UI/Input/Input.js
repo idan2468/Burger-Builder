@@ -3,19 +3,25 @@ import React, {Fragment} from 'react';
 import styles from './Input.scss';
 
 const input = (props) => {
-    let inputStyle = !props.valid ? styles.invalid : null;
-    let inputElement = null;
+    let inputStyle = [];
+    if(!props.valid){
+        inputStyle.push(styles.invalid)
+    }
+    if (props.inputStyle) {
+        inputStyle.push(props.inputStyle);
+    }
+    let inputElement;
     let optionsElements = props.options.map(option => <option key={option} value={option}>{option}</option>);
     switch (props.inputType) {
         case 'input':
             inputElement =
                 <input type={props.type} name={props.name} placeholder={props.placeholder} value={props.value}
-                       onChange={props.onChange} className={inputStyle}/>;
+                       onChange={props.onChange} className={inputStyle.join(' ')}/>;
             break
         case 'select':
             inputElement = (
                 <select name={props.name} placeholder={props.placeholder} value={props.value}
-                        onChange={props.onChange}>
+                        onChange={props.onChange} className={inputStyle.join(' ')}>
                     {optionsElements}
                 </select>
             );
@@ -27,9 +33,6 @@ const input = (props) => {
     return (
         <Fragment>
             <label className={styles.formItem}>{props.label}
-                {/*<input type={props.type} name={props.name} placeholder={props.placeholder} value={props.value}*/}
-                {/*       onChange={props.onChange}/>*/}
-                {/*<input {...props}/>*/}
                 {inputElement}
             </label>
         </Fragment>
@@ -47,7 +50,8 @@ input.propTypes = {
     placeholder: PropTypes.string,
     type: PropTypes.string,
     valid: PropTypes.bool,
-    value: PropTypes.string
+    value: PropTypes.string,
+    inputStyle: PropTypes.string
 }
 
 input.defaultProps = {
