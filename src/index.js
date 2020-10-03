@@ -12,7 +12,7 @@ import {Provider} from "react-redux";
 
 axios.defaults.baseURL = "http://localhost:4000";
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
 
 
 const rootReducer = combineReducers({
