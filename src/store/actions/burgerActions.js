@@ -16,6 +16,10 @@ export const fetchIngredientsPending = () => {
     return {type: actionTypes.FETCH_INGREDIENTS_PENDING, payload: {loading: true}}
 }
 
+export const setOrdered = (isOrdered) => {
+    return {type: actionTypes.SET_ORDERED, payload: {ordered: isOrdered}}
+}
+
 export const initIngredients = () => {
     return async dispatch => {
         dispatch(fetchIngredientsPending());
