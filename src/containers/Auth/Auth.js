@@ -58,9 +58,6 @@ class Auth extends Form {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        // if (this.props.logon && !this.props.error) {
-        //     this.props.history.replace('/');
-        // }
         if (this.props.ordered && this.props.isAuth) {
             this.props.history.replace('/checkout');
         } else if (this.props.isAuth) {
