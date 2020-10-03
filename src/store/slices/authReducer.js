@@ -6,6 +6,9 @@ export const loginHandler = createAsyncThunk('LOGIN_HANDLER',
         try {
             // await new Promise(resolve => setTimeout(() => resolve(), 2000));
             const res = await axios.post('/login', {username: username, password: password});
+            const expDate = new Date(new Date().getTime() + res.data.expiresIn * 1000);
+            localStorage.setItem('token', res.data.token);
+            localStorage.setItem('expDate', expDate.toISOString());
             dispatch(logout({expireTime: res.data.expiresIn}));
             return res.data.token;
         } catch (e) {
@@ -25,7 +28,25 @@ export const registerHandler = createAsyncThunk('REGISTER_HANDLER',
 
 export const logout = createAsyncThunk('LOGOUT', async ({expireTime}) => {
     console.log(expireTime);
-    await new Promise(resolve => setTimeout(() => resolve(), expireTime));
+
+    await new Promise(resolve => setTimeout(() => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('expDate');
+        resolve();
+    }, expireTime));
+    return null;
+})
+export const checkAuthStatus = createAsyncThunk('CHECK_AUTH', async ({}, {dispatch}) => {
+    const token = localStorage.getItem('token');
+    if (token && new Date(localStorage.getItem('expDate')) >= new Date()) {
+        // get token from local storage and restore it
+        // noinspection JSCheckFunctionSignatures
+        dispatch(loginHandler.fulfilled(token));
+        return token;
+    } else {
+        //delete local storage
+        dispatch(logout({expireTime: 0}));
+    }
     return null;
 })
 
@@ -69,7 +90,7 @@ const login = createSlice({
         [logout.fulfilled]: (state, action) => {
             state.logon = false;
             state.token = null;
-        }
+        },
     }
 });
 
