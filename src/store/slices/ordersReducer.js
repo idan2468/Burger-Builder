@@ -2,23 +2,28 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import axios from "axios";
 
 export const fetchOrders = createAsyncThunk('FETCH_ORDER',
-    async (payload, {rejectWithValue, getState}) => {
+    async (userId, {rejectWithValue, getState}) => {
         try {
             // await new Promise(resolve => setTimeout(() => resolve(), 2000));
-            const orders = await axios.post('/orders', {token: getState().auth.token});
+            let APIEndpoint = '/orders';
+            if (userId) {
+                APIEndpoint += '/' + userId
+            }
+            const orders = await axios.post(APIEndpoint, {token: getState().auth.token});
             return orders.data;
         } catch (e) {
             return rejectWithValue('Error fetching orders.');
         }
     });
 export const createOrder = createAsyncThunk('CREATE_ORDER',
-    async ({ingredientsCount, price, customer}, {rejectWithValue, getState}) => {
+    async ({ingredientsCount, price, customer, userId}, {rejectWithValue, getState}) => {
         try {
             await axios.put('/order', {
                 price: price,
                 ingredients: ingredientsCount,
                 customer: customer,
-                token: getState().auth.token
+                token: getState().auth.token,
+                userId: userId
             })
         } catch (error) {
             return rejectWithValue(error.message)
