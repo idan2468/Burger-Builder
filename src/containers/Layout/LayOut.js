@@ -3,7 +3,7 @@ import Toolbar from '../../components/Navigation/Toolbar/Toolbar'
 import styles from './Layout.scss'
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
-class layOut extends Component {
+class LayOut extends Component {
     state = {
         showSideDrawer: null
     }
@@ -32,4 +32,4 @@ class layOut extends Component {
     }
 }
 
-export default layOut;
+export default LayOut;

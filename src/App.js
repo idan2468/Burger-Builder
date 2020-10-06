@@ -1,5 +1,5 @@
 import React, {Component, Fragment, Suspense} from 'react';
-import Layout from './containers/Layout/Layout';
+import Layout from './containers/Layout/LayOut';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {connect} from "react-redux";
