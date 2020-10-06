@@ -58,7 +58,7 @@ const initialState = {
     loading: false,
     error: null,
     logon: false,
-    userId:null
+    userId: null
 }
 
 const login = createSlice({
