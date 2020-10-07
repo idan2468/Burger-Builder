@@ -6,7 +6,9 @@ export const loginHandler = createAsyncThunk('LOGIN_HANDLER',
         try {
             // await new Promise(resolve => setTimeout(() => resolve(), 2000));
             const res = await axios.post('/login', {username: username, password: password});
-            const expDate = new Date(new Date().getTime() + res.data.expiresIn * 1000);
+            const expDate = new Date(Date.now() + res.data.expiresIn);
+            console.log(expDate)
+            console.dir(expDate)
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('expDate', expDate.toISOString());
             localStorage.setItem('userId', res.data.userId);
@@ -61,10 +63,15 @@ const initialState = {
     userId: null
 }
 
-const login = createSlice({
-    name: 'login',
+const auth = createSlice({
+    name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        resetState: (state) => {
+            state.loading = false
+            state.error = null
+        }
+    },
     extraReducers: {
         [loginHandler.pending]: (state) => {
             state.loading = true;
@@ -102,4 +109,6 @@ const login = createSlice({
 });
 
 
-export const authReducer = login.reducer;
+export const authReducer = auth.reducer;
+
+export const {resetState} = auth.actions

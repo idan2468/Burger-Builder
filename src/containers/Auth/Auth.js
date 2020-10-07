@@ -55,6 +55,7 @@ class Auth extends Form {
 
     componentDidMount() {
         this.changeAuthMode();
+        this.props.resetState();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -126,7 +127,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         loginHandler: async (payload) => dispatch(actions.loginHandler(payload)),
-        registerHandler: async (payload) => dispatch(actions.registerHandler(payload))
+        registerHandler: async (payload) => dispatch(actions.registerHandler(payload)),
+        resetState: async () => dispatch(actions.resetState())
     }
 }
 
