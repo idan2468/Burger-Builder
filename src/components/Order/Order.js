@@ -24,7 +24,7 @@ const order = (props) => {
                         {ingredients}
                     </div>
                 </div>
-                <h3>Price: {props.price}</h3>
+                <h3>Price: ${props.price}</h3>
             </div>
         </Fragment>
     )
