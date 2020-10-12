@@ -9,4 +9,4 @@ Burger Builder project using React that includes the following:
 5. Adding user authentication, calling to the REST API to get jwt token.
 
 
-link to Github Pages: https://idan2468.github.io/Burger-Builder/
+link to Github Pages: https://idan2468.github.io/Burger-Builder/ (takes a little time at the start to wake up the API server on the main page get request)
