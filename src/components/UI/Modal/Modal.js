@@ -10,7 +10,7 @@ class modal extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log("[Modal] - Updated")
+        // console.log("[Modal] - Updated")
     }
 
     render() {

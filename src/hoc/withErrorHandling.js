@@ -10,7 +10,7 @@ const withErrorHandling = (WrappedComponent, axios) => {
                 return req;
             }, err => {
                 if (err) {
-                    console.log(err);
+                    // console.log(err);
                     this.setState({error: err});
                 }
                 return Promise.reject(err);

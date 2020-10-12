@@ -27,7 +27,7 @@ class App extends Component {
         this.props.checkAuth();
         return (
             <Fragment>
-                <BrowserRouter basename={process.env.BASE_URL}>
+                <BrowserRouter basename={process.env.REACT_APP_BASE_URL}>
                     <Layout>
                         <Suspense fallback={<LoadingSpinner/>}>
                             <Switch>

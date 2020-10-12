@@ -7,8 +7,6 @@ export const loginHandler = createAsyncThunk('LOGIN_HANDLER',
             // await new Promise(resolve => setTimeout(() => resolve(), 2000));
             const res = await axios.post('/login', {username: username, password: password});
             const expDate = new Date(Date.now() + res.data.expiresIn);
-            console.log(expDate)
-            console.dir(expDate)
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('expDate', expDate.toISOString());
             localStorage.setItem('userId', res.data.userId);
@@ -30,7 +28,7 @@ export const registerHandler = createAsyncThunk('REGISTER_HANDLER',
     });
 
 export const logout = createAsyncThunk('LOGOUT', async ({expireTime}) => {
-    console.log(expireTime);
+    // console.log(expireTime);
 
     await new Promise(resolve => setTimeout(() => {
         localStorage.removeItem('token');

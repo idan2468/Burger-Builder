@@ -69,7 +69,7 @@ class ContactDetails extends Form {
     submitHandler = async (event) => {
         event.preventDefault();
         let customer = this.generateCustomer();
-        console.log(this.props.ingredients)
+        // console.log(this.props.ingredients)
         let ingredientsCount = Object.keys(this.props.ingredients).reduce((obj, ing) => {
             obj[ing] = this.props.ingredients[ing].count;
             return obj;

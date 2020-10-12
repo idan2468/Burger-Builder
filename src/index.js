@@ -11,7 +11,6 @@ import {Provider} from "react-redux";
 
 
 axios.defaults.baseURL = process.env.REACT_APP_REST_API || "http://localhost:4000";
-
 const composeEnhancers = process.env.REACT_APP_NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
 
 

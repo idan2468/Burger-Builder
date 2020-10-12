@@ -24,7 +24,7 @@ class Checkout extends Component {
     }
 
     render() {
-        console.log(this.props.match.path + '/contact-details');
+        // console.log(this.props.match.path + '/contact-details');
         return (
             <Fragment>
                 <div className={styles.container}>
