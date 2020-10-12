@@ -5,10 +5,12 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {connect} from "react-redux";
 import * as actions from './store/actions/actions';
 import LoadingSpinner from "./components/UI/LoadingSpinner/LoadingSpinner";
+
 const Checkout = React.lazy(() => import("./containers/Checkout/Checkout"));
 const Orders = React.lazy(() => import("./containers/Orders/Orders"));
 const Auth = React.lazy(() => import("./containers/Auth/Auth"));
 const ContactDetails = React.lazy(() => import("./containers/ContactDetails/ContactDetails"));
+
 
 // const logger = store => {
 //     return next => {
@@ -26,7 +28,7 @@ class App extends Component {
         this.props.checkAuth();
         return (
             <Fragment>
-                <BrowserRouter>
+                <BrowserRouter basename={process.env.BASE_LINK}>
                     <Layout>
                         <Suspense fallback={<LoadingSpinner/>}>
                             <Switch>
