@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import styles from './NavigationItems.scss'
+import styles from './NavigationItems.css'
 import NavigationItem from './NavigationItem/NavigationItem'
 import {connect} from "react-redux";
 import * as actions from '../../../store/actions/actions';

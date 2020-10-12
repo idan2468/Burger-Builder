@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, {Fragment} from 'react';
-import styles from './Toolbar.scss';
+import styles from './Toolbar.css';
 import Logo from '../../UI/Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems';
 import SideDrawerToggle from './SideDrawerToggle/SideDrawerToggle';

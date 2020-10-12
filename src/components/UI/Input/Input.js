@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, {Fragment} from 'react';
-import styles from './Input.scss';
+import styles from './Input.css';
 
 const input = (props) => {
     let inputStyle = [];

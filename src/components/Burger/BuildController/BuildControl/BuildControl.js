@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, {Fragment, useRef} from 'react';
-import styles from './BuildControl.scss';
+import styles from './BuildControl.css';
 
 const buildControl = (props) => {
     const inputCountRef = useRef(null);

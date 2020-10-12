@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, {Component, Fragment} from 'react';
-import styles from './Modal.scss';
+import styles from './Modal.css';
 import Backdrop from "../Backdrop/Backdrop";
 
 class modal extends Component {

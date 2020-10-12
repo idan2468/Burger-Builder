@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import Button from "../../components/UI/Button/Button";
-import styles from './ContactDetails.scss';
+import styles from './ContactDetails.css';
 import {withRouter} from "react-router";
 import validator from "validator";
 import {connect} from "react-redux";

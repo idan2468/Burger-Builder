@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, {Fragment} from 'react';
 import BurgerIngredients from './BurgerIngredients/BurgerIngredients';
-import styles from './Burger.scss';
+import styles from './Burger.css';
 import {withRouter} from "react-router";
 
 const burger = (props) => {

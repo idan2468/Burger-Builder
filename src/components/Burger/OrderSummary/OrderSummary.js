@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, {Fragment} from 'react';
-import styles from './OrderSummary.scss';
+import styles from './OrderSummary.css';
 import Button from '../../UI/Button/Button'
 
 const orderSummary = (props) => {

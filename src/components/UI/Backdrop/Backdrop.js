@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, {Fragment, useRef} from 'react';
-import styles from './Backdrop.scss';
+import styles from './Backdrop.css';
 
 const backdrop = (props) => {
     let divRef = useRef();
