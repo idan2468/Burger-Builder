@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, {Fragment} from 'react';
-import styles from './CheckoutSummary.scss'
+import styles from './CheckoutSummary.css'
 import Button from "../../UI/Button/Button";
 
 const checkoutSummary = (props) => {

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, {Fragment} from 'react';
-import styles from './BuildController.scss';
+import styles from './BuildController.css';
 import BuildControl from './BuildControl/BuildControl'
 import Button from "../../UI/Button/Button";
 

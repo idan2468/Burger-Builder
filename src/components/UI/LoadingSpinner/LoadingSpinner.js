@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import styles from './LoadingSpinner.scss';
+import styles from './LoadingSpinner.css';
 
 const loadingSpinner = (props) => {
     const [content, setContent] = useState(null);

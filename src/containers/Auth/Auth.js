@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import * as actions from "../../store/actions/actions";
 import Form from "../../components/UI/Form/Form";
 import validator from "validator";
-import styles from "./Auth.scss";
+import styles from "./Auth.css";
 import Button from "../../components/UI/Button/Button";
 import React, {Fragment} from "react";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";

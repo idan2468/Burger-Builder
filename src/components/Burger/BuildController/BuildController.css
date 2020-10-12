@@ -23,7 +23,7 @@
 .btnOrder:hover,
 .btnOrder:active {
   background: #f4d004;
-  color: rgb(0, 0, 0, 0.9);
+  color: rgba(0, 0, 0, 0.9);
 }
 
 .btnOrder:disabled {

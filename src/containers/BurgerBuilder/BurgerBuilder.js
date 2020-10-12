@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import axios from 'axios';
-import styles from './BurgerBuilder.scss';
+import styles from './BurgerBuilder.css';
 import BurgerGUI from '../../components/Burger/Burger';
 import BuildController from '../../components/Burger/BuildController/BuildController';
 import Modal from '../../components/UI/Modal/Modal';

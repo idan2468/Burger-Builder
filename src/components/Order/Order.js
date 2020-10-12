@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, {Fragment} from 'react';
-import styles from './Order.scss';
+import styles from './Order.css';
 
 const order = (props) => {
     let ingredients = null;

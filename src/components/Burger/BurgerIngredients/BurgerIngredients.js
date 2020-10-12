@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import styles from './BurgerIngredients.scss';
+import styles from './BurgerIngredients.css';
 import PropTypes from 'prop-types';
 
 const ingredientsStyles = {

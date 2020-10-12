@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, {Fragment} from 'react';
-import styles from './SideDrawer.scss'
+import styles from './SideDrawer.css'
 import Backdrop from '../../UI/Backdrop/Backdrop';
 import NavigationItems from "../NavigationItems/NavigationItems";
 

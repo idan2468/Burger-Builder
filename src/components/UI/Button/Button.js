@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, {Fragment} from 'react';
-import styles from './Button.scss'
+import styles from './Button.css'
 
 const mapTypeToStyle = {
     'ok': styles.okBtn,

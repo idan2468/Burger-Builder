@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import Order from "../../components/Order/Order";
-import styles from './Orders.scss';
+import styles from './Orders.css';
 import * as actions from "../../store/actions/actions";
 import {connect} from "react-redux";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";

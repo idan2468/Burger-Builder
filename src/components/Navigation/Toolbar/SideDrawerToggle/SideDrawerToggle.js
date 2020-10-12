@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, {Fragment} from 'react';
-import styles from './SideDrawerToggle.scss';
+import styles from './SideDrawerToggle.css';
 import BarImage from '../../../../assets/images/bars-solid.svg';
 const sideDrawerToggle = (props) => {
     return (

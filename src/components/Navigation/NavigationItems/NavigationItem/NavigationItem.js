@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, {Fragment} from 'react';
-import styles from "./NavigationItem.scss";
+import styles from "./NavigationItem.css";
 import {NavLink} from "react-router-dom";
 
 const navigationItem = (props) => {
