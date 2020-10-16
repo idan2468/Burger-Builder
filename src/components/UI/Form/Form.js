@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Input from "../Input/Input";
 
+//todo convert form to custom hooks
 class Form extends Component {
     constructor(props, config) {
         super(props);

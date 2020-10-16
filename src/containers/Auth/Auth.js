@@ -10,6 +10,8 @@ import Button from "../../components/UI/Button/Button";
 import React, {Fragment} from "react";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 
+
+//todo convert to function component with the help of custom hooks useForm
 class Auth extends Form {
     constructor(props) {
         super(props, {
