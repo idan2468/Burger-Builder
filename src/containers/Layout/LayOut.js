@@ -1,35 +1,27 @@
-import React, {Component, Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar'
 import styles from './Layout.css'
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
-class LayOut extends Component {
-    state = {
-        showSideDrawer: null
+const LayOut = (props) => {
+    const [showSideDrawer, setShowSideDrawer] = useState(null);
+
+    const closeSideDrawerHandler = () => {
+        setShowSideDrawer(false)
+    }
+    const openSideDrawerHandler = () => {
+        setShowSideDrawer(true)
     }
 
-    closeSideDrawerHandler = () => {
-        this.setState((prevState) => {
-            return {showSideDrawer: false}
-        })
-    }
-    openSideDrawerHandler = () => {
-        this.setState((prevState) => {
-            return {showSideDrawer: true}
-        })
-    }
-
-    render() {
-        return (
-            <Fragment>
-                <SideDrawer show={this.state.showSideDrawer} onClick={this.closeSideDrawerHandler}/>
-                <Toolbar toggleClick={this.openSideDrawerHandler}/>
-                <main className={styles.mainContent}>
-                    {this.props.children}
-                </main>
-            </Fragment>
-        )
-    }
+    return (
+        <Fragment>
+            <SideDrawer show={showSideDrawer} onClick={closeSideDrawerHandler}/>
+            <Toolbar toggleClick={openSideDrawerHandler}/>
+            <main className={styles.mainContent}>
+                {props.children}
+            </main>
+        </Fragment>
+    )
 }
 
 export default LayOut;

@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import Order from "../../components/Order/Order";
 import styles from './Orders.css';
 import * as actions from "../../store/actions/actions";
@@ -7,9 +7,9 @@ import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 import {withRouter} from "react-router";
 
 
-class Orders extends Component {
-    getOrders = () => {
-        return this.props.orders.map((order, index) => {
+const Orders = (props) => {
+    const getOrders = () => {
+        return props.orders.map((order, index) => {
             let ingredients = Object.keys(order.burgerIngredients).reduce((obj, key) => {
                 if (order.burgerIngredients[key] !== 0) {
                     obj[key] = order.burgerIngredients[key]
@@ -22,33 +22,29 @@ class Orders extends Component {
             )
         })
     }
+    useEffect(() => {
+        props.fetchOrders(props.userId);
+    }, [])
 
-    async componentDidMount() {
-        this.props.fetchOrders(this.props.userId);
+    let orders = getOrders();
+    let content = <div className={styles.ordersContainer}>{orders}</div>
+    if (props.orders.length === 0 && !props.loading) {
+        content = <h1>No Orders yet!!</h1>;
     }
+    if (props.loading) {
+        content = <LoadingSpinner/>;
+    }
+    if (props.error) {
+        content = <h1 style={{textAlign: 'center'}}>{props.error}</h1>;
+    }
+    return (
+        <Fragment>
+            {/*<div className={styles.ordersContainer}>*/}
+            {content}
+            {/*</div>*/}
+        </Fragment>
+    )
 
-    render() {
-        let orders = this.getOrders();
-        let content = <div className={styles.ordersContainer}>
-            {orders}
-        </div>
-        if (this.props.orders.length === 0 && !this.props.loading) {
-            content = <h1>No Orders yet!!</h1>;
-        }
-        if (this.props.loading) {
-            content = <LoadingSpinner/>;
-        }
-        if (this.props.error) {
-            content = <h1 style={{textAlign: 'center'}}>{this.props.error}</h1>;
-        }
-        return (
-            <Fragment>
-                {/*<div className={styles.ordersContainer}>*/}
-                {content}
-                {/*</div>*/}
-            </Fragment>
-        )
-    }
 }
 
 const mapStateToProps = (state) => {
@@ -57,7 +53,7 @@ const mapStateToProps = (state) => {
         error: state.order.error,
         loading: state.order.loading,
         isAuth: state.auth.logon,
-        userId:state.auth.userId
+        userId: state.auth.userId
     }
 }
 

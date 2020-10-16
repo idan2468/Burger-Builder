@@ -1,10 +1,11 @@
-import React, {Component, Fragment, Suspense} from 'react';
+import React, {Fragment, Suspense} from 'react';
 import Layout from './containers/Layout/LayOut';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {connect} from "react-redux";
 import * as actions from './store/actions/actions';
 import LoadingSpinner from "./components/UI/LoadingSpinner/LoadingSpinner";
+
 const Checkout = React.lazy(() => import("./containers/Checkout/Checkout"));
 const Orders = React.lazy(() => import("./containers/Orders/Orders"));
 const Auth = React.lazy(() => import("./containers/Auth/Auth"));
@@ -21,28 +22,26 @@ const ContactDetails = React.lazy(() => import("./containers/ContactDetails/Cont
 //     }
 // }
 
-class App extends Component {
-    render() {
-        this.props.checkAuth();
-        return (
-            <Fragment>
-                <BrowserRouter>
-                    <Layout>
-                        <Suspense fallback={<LoadingSpinner/>}>
-                            <Switch>
-                                {this.props.isAuth ?
-                                    <Route path='/checkout/contact-details' component={ContactDetails}/> : null}
-                                {this.props.isAuth ? <Route path="/checkout" component={Checkout}/> : null}
-                                {this.props.isAuth ? <Route path="/orders" component={Orders}/> : null}
-                                <Route path="/auth" component={Auth}/>
-                                <Route path='/' component={BurgerBuilder}/>
-                            </Switch>
-                        </Suspense>
-                    </Layout>
-                </BrowserRouter>
-            </Fragment>
-        );
-    }
+const App = (props) => {
+    props.checkAuth();
+    return (
+        <Fragment>
+            <BrowserRouter>
+                <Layout>
+                    <Suspense fallback={<LoadingSpinner/>}>
+                        <Switch>
+                            {props.isAuth ?
+                                <Route path='/checkout/contact-details' component={ContactDetails}/> : null}
+                            {props.isAuth ? <Route path="/checkout" component={Checkout}/> : null}
+                            {props.isAuth ? <Route path="/orders" component={Orders}/> : null}
+                            <Route path="/auth" component={Auth}/>
+                            <Route path='/' component={BurgerBuilder}/>
+                        </Switch>
+                    </Suspense>
+                </Layout>
+            </BrowserRouter>
+        </Fragment>
+    )
 }
 
 const mapStateToProps = (state) => {

@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Fragment, useCallback, useEffect, useState} from 'react';
 import axios from 'axios';
 import styles from './BurgerBuilder.css';
 import BurgerGUI from '../../components/Burger/Burger';
@@ -11,87 +11,74 @@ import {connect} from "react-redux";
 import * as actions from '../../store/actions/actions';
 
 
-class BurgerBuilder extends Component {
-    state = {
-        showModal: false
-    };
+const BurgerBuilder = (props) => {
+    const [showModal, setShowModal] = useState(false);
 
-    async componentDidMount() {
-        this.props.onInitIngredients();
+    useEffect(() => {
+        props.onInitIngredients();
+    }, [])
 
-    }
-
-    orderHandler = async () => {
-        this.props.setOrdered(true);
-        if (!this.props.isAuth) {
-            this.props.history.replace('/auth');
+    const orderHandler = async () => {
+        props.setOrdered(true);
+        if (!props.isAuth) {
+            props.history.replace('/auth');
         } else {
-            this.setState(prevState => {
-                return {
-                    showModal: true
-                }
-            })
+            setShowModal(true);
         }
     }
-    goToCheckout = async () => {
-        this.props.history.push({pathname: '/checkout'});
+    const goToCheckout = async () => {
+        props.history.push({pathname: '/checkout'});
     }
-    cancelHandler = () => {
-        this.setState(prevState => {
-            return {
-                showModal: false
-            }
-        })
-        this.props.setOrdered(false);
-    }
-    getOrderSummary = () => {
+    const cancelHandler = useCallback(() => {
+        setShowModal(false);
+        props.setOrdered(false);
+    },[])
+    const getOrderSummary = () => {
         return (
             <OrderSummary {...{
-                ingredients: this.props.ingredients,
-                price: this.props.price,
-                onCancel: this.cancelHandler,
-                onOk: this.goToCheckout
+                ingredients: props.ingredients,
+                price: props.price,
+                onCancel: cancelHandler,
+                onOk: goToCheckout
             }}/>
         )
     }
-    getBurgerGUI = () => {
+    const getBurgerGUI = () => {
         return (
             <Fragment>
                 <BurgerGUI {...{
-                    ingredients: this.props.ingredients
+                    ingredients: props.ingredients
                 }}/>
                 <div className={styles.buildControllerContainer}>
-                    <p className={styles.priceLabel}>Price: {this.props.price}$</p>
+                    <p className={styles.priceLabel}>Price: {props.price}$</p>
                     <BuildController {...{
-                        ingredients: this.props.ingredients,
-                        price: this.props.price,
-                        onClick: this.props.changeIngredientCount,
-                        onOrder: this.orderHandler
+                        ingredients: props.ingredients,
+                        price: props.price,
+                        onClick: props.changeIngredientCount,
+                        onOrder: orderHandler
                     }}/>
                 </div>
             </Fragment>
         )
     }
-
-    render() {
-        let burgerGUI = <LoadingSpinner/>;
-        let modalContent = null;
-        if (this.props.ingredients != null) {
-            modalContent = this.getOrderSummary();
-            burgerGUI = this.getBurgerGUI();
-        }
-        if (this.props.loading) {
-            modalContent = <LoadingSpinner show={this.props.loading}/>;
-        }
-        return (
-            <Fragment>
-                <Modal openModal={this.state.showModal} onClick={this.cancelHandler}>
-                    {modalContent}
-                </Modal>
-                {burgerGUI}
-            </Fragment>
-        )
+    let burgerGUI = <LoadingSpinner/>;
+    let modalContent = null;
+    if (props.ingredients != null) {
+        modalContent = getOrderSummary();
+        burgerGUI = getBurgerGUI();
     }
+    if (props.loading) {
+        modalContent = <LoadingSpinner show={props.loading}/>;
+    }
+    return (
+        <Fragment>
+            <Modal openModal={showModal} onClick={cancelHandler}>
+                {modalContent}
+            </Modal>
+            {burgerGUI}
+        </Fragment>
+    )
+
 }
 
 
