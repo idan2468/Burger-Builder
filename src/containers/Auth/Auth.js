@@ -3,116 +3,112 @@ import withErrorHandling from "../../hoc/withErrorHandling";
 import axios from 'axios';
 import {connect} from "react-redux";
 import * as actions from "../../store/actions/actions";
-import Form from "../../components/UI/Form/Form";
 import validator from "validator";
 import styles from "./Auth.css";
 import Button from "../../components/UI/Button/Button";
-import React, {Fragment} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
+import useForm from "../../components/UI/Form/Form";
+
+const authConfig = {
+    username: {
+        name: 'username',
+        label: 'Username',
+        placeholder: 'Enter Your Name',
+        type: 'text',
+        isValid: (value) => validator.isAlphanumeric(value.replaceAll(' ', '')) && !validator.isEmpty(value)
+    },
+    password: {
+        name: 'password',
+        label: 'Password',
+        placeholder: 'Enter Your Password',
+        type: 'password',
+        isValid: (value) => validator.isLength(value, {min: 8})
+    },
+    email: {
+        name: 'email',
+        label: 'Email',
+        placeholder: 'Enter Your Email',
+        type: 'email',
+        isValid: (value) => validator.isEmail(value)
+    },
+}
+
+const Auth = (props) => {
+    const {state, disableField, enableField, JSXForm, cleanForm} = useForm(authConfig);
+    const [isLogin, setIsLogin] = useState(false);
+    const {ordered, isAuth} = props;
+
+    useEffect(() => {
+        changeAuthMode();
+        props.resetState();
+    }, [])
+
+    useEffect(() => {
+        if (ordered && isAuth) {
+            props.history.replace('/checkout');
+        } else if (isAuth) {
+            props.history.replace('/');
+        }
+    }, [ordered, isAuth]);
 
 
-//todo convert to function component with the help of custom hooks useForm
-class Auth extends Form {
-    constructor(props) {
-        super(props, {
-            username: {
-                name: 'username',
-                label: 'Username',
-                placeholder: 'Enter Your Name',
-                type: 'text',
-                isValid: (value) => validator.isAlphanumeric(value.replaceAll(' ', '')) && !validator.isEmpty(value)
-            },
-            password: {
-                name: 'password',
-                label: 'Password',
-                placeholder: 'Enter Your Password',
-                type: 'password',
-                isValid: (value) => validator.isLength(value, {min: 8})
-            },
-            email: {
-                name: 'email',
-                label: 'Email',
-                placeholder: 'Enter Your Email',
-                type: 'email',
-                isValid: (value) => validator.isEmail(value)
-            },
-        });
-        this.state.isLogin = false;
-    }
-
-
-    submitHandler = async (event) => {
+    const submitHandler = async (event) => {
         event.preventDefault();
-        const username = this.state.formDetails.username.value;
-        const password = this.state.formDetails.password.value;
-        const email = this.state.formDetails.email.value;
-        if (this.state.isLogin) {
-            await this.props.loginHandler({username: username, password: password});
+        const username = state.formDetails.username.value;
+        const password = state.formDetails.password.value;
+        const email = state.formDetails.email.value;
+        if (isLogin) {
+            await props.loginHandler({username: username, password: password});
         } else {
-            await this.props.registerHandler({username: username, password: password, email: email});
-            this.changeAuthMode();
-        }
-
-    }
-
-    componentDidMount() {
-        this.changeAuthMode();
-        this.props.resetState();
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.ordered && this.props.isAuth) {
-            this.props.history.replace('/checkout');
-        } else if (this.props.isAuth) {
-            this.props.history.replace('/');
+            await props.registerHandler({username: username, password: password, email: email});
+            changeAuthMode();
         }
     }
 
-    changeAuthMode = () => {
+    const changeAuthMode = () => {
         // Changing to login mode
-        if (!this.state.isLogin) {
-            super.disableField('email');
+        if (!isLogin) {
+            disableField('email');
         }
         // Changing to signup mode
         else {
-            super.enableField('email');
+            enableField('email');
         }
-        super.cleanForm();
-        this.setState({isLogin: !this.state.isLogin});
+        cleanForm();
+        setIsLogin(isLogin => !isLogin);
     }
 
-    render() {
-        let generatedForm = this.generateForm();
-        let content = (
-            <Fragment>
-                <form className={styles.formContainer} onSubmit={this.submitHandler}>
-                    <h2>Enter your details:</h2>
-                    {generatedForm}
-                    <Button type={'ok'} text={this.state.isLogin ? 'Login' : 'Signup'}
-                            disabled={!this.state.isFormValid}/>
-                    <Button type={'ok'} text={`Switch to ${!this.state.isLogin ? 'Login' : 'Signup'}`}
-                            onClick={this.changeAuthMode} extraStyle={styles.switchModeBtn} buttonType={'button'}/>
-                </form>
-            </Fragment>
+    let content = (
+        <Fragment>
+            <form className={styles.formContainer} onSubmit={submitHandler}>
+                <h2>Enter your details:</h2>
+                {JSXForm}
+                <Button type={'ok'} text={isLogin ? 'Login' : 'Signup'}
+                        disabled={!state.isFormValid}/>
+                <Button type={'ok'} text={`Switch to ${!isLogin ? 'Login' : 'Signup'}`}
+                        onClick={changeAuthMode} extraStyle={styles.switchModeBtn} buttonType={'button'}/>
+            </form>
+        </Fragment>
+    )
+
+    if (props.loading) {
+        content = <LoadingSpinner/>
+    }
+    console.log(props.error)
+    if (props.error) {
+        content = (
+            <form className={styles.formContainer} onSubmit={submitHandler} style={{width: '100%'}}>
+                <h1>{props.error}</h1>
+            </form>
         )
-        if (this.props.loading) {
-            content = <LoadingSpinner/>
-        }
-        if (this.props.error) {
-            content = (
-                <form className={styles.formContainer} onSubmit={this.submitHandler} style={{width: '100%'}}>
-                    <h1>{this.props.error}</h1>
-                </form>
-            )
-        }
-        return (
-            <Fragment>
-                {content}
-            </Fragment>
-        );
     }
 
-
+    return (
+        <Fragment>
+            {content}
+        </Fragment>
+    );
 }
 
 const mapStateToProps = (state) => {
