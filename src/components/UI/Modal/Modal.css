@@ -1,36 +1,39 @@
 .modalDiv {
-  width: 70%;
-  min-width: 20rem;
-  min-height: 20rem;
-  position: fixed;
-  top: 20%;
-  left: 15%;
-  background: #fffaf0;
-  color: black;
-  z-index: 2000;
-  font: inherit;
-  font-size: 1.5rem;
-  font-style: italic;
-  border: #91ce50 2px solid;
-  padding: 1rem;
-  transition: transform 600ms ease-in-out, visibility 600ms, opacity 600ms ease-in-out;
-  transform: translateY(-4rem);
-  visibility: hidden;
-  opacity: 0;
+    width: 70%;
+    min-width: 20rem;
+    min-height: 20rem;
+    position: fixed;
+    top: 20%;
+    left: 15%;
+    background: #fffaf0;
+    color: black;
+    z-index: 2000;
+    font: inherit;
+    font-size: 1.5rem;
+    font-style: italic;
+    border: #91ce50 2px solid;
+    padding: 1rem;
+    transition: transform 600ms ease-in-out, visibility 600ms, opacity 600ms ease-in-out;
+    transform: translateY(-4rem);
+    visibility: hidden;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
 .open {
-  transform: translateY(0);
-  visibility: visible;
-  opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    opacity: 1;
 }
 
 
-@media (min-width: 550px) {
-  .modalDiv {
-    width: 50%;
-    max-width: max-content;
-    left: 30%;
-  }
+@media (min-width: 650px) {
+    .modalDiv {
+        width: 50%;
+        max-width: max-content;
+        left: 35%;
+    }
 }
