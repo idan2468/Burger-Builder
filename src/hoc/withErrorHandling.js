@@ -1,55 +1,47 @@
-import React, {Component, Fragment} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Modal from "../components/UI/Modal/Modal";
 import styles from './withErrorHandling.css'
 
 const withErrorHandling = (WrappedComponent, axios) => {
-    return class extends Component {
-        constructor(props) {
-            super(props);
-            this.reqInterceptor = axios.interceptors.request.use(req => {
-                return req;
-            }, err => {
-                if (err) {
-                    console.log(err);
-                    this.setState({error: err});
-                }
-                return Promise.reject(err);
-            })
-            this.resInterceptor = axios.interceptors.response.use(res => res, err => {
-                if (err) {
-                    console.log(err);
-                    this.setState({error: err});
-                }
-                return Promise.reject(err);
-            })
-            this.state = {
-                error: null,
-                reqInterceptor: this.reqInterceptor,
-                resInterceptor: this.resInterceptor,
+    return props => {
+        const [error, setError] = useState(null);
+        const reqInterceptor = axios.interceptors.request.use(req => {
+            return req;
+        }, err => {
+            if (err) {
+                console.log(err);
+                setError(err);
             }
-        }
+            return Promise.reject(err);
+        })
+        const resInterceptor = axios.interceptors.response.use(res => res, err => {
+            if (err) {
+                console.log(err);
+                setError(err);
+            }
+            return Promise.reject(err);
+        })
 
-        componentWillUnmount() {
-            axios.interceptors.request.eject(this.state.reqInterceptor);
-            axios.interceptors.response.eject(this.state.resInterceptor);
-        }
+        useEffect(() => {
+            return () => {
+                axios.interceptors.request.eject(reqInterceptor);
+                axios.interceptors.response.eject(resInterceptor);
+            };
+        }, []);
 
-        clearError = () => {
-            this.setState({error: null});
+        const clearError = () => {
+            setError(null);
         }
-
-        render() {
-            return (
-                <Fragment>
-                    <Modal openModal={!!this.state.error} onClick={this.clearError}>
-                        <div className={styles.content}>
-                            {this.state.error ? this.state.error.message : null}
-                        </div>
-                    </Modal>
-                    <WrappedComponent {...this.props}/>
-                </Fragment>
-            )
-        }
+        return (
+            <Fragment>
+                <Modal openModal={!!error} onClick={clearError}>
+                    <div className={styles.content}>
+                        {error ? error.message : null}
+                    </div>
+                </Modal>
+                <WrappedComponent {...props}/>
+            </Fragment>
+        )
     }
 }
 
