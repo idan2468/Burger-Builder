@@ -14,5 +14,6 @@
     <orderEntry type="library" name="@types/enzyme" level="application" />
     <orderEntry type="library" name="@types/express" level="application" />
     <orderEntry type="library" name="@types/mongoose" level="application" />
+    <orderEntry type="library" name="@types/redux-action" level="application" />
   </component>
 </module>
