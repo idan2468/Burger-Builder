@@ -1,8 +1,8 @@
-import React, {Fragment, Suspense} from 'react';
+import React, {Fragment, Suspense, useCallback} from 'react';
 import Layout from './containers/Layout/LayOut';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import * as actions from './store/actions/actions';
 import LoadingSpinner from "./components/UI/LoadingSpinner/LoadingSpinner";
 
@@ -11,6 +11,7 @@ const Orders = React.lazy(() => import("./containers/Orders/Orders"));
 const Auth = React.lazy(() => import("./containers/Auth/Auth"));
 const ContactDetails = React.lazy(() => import("./containers/ContactDetails/ContactDetails"));
 
+// logger middleware not in use
 // const logger = store => {
 //     return next => {
 //         return action => {
@@ -23,17 +24,20 @@ const ContactDetails = React.lazy(() => import("./containers/ContactDetails/Cont
 // }
 
 const App = (props) => {
-    props.checkAuth();
+    const isAuth = useSelector(state => state.auth.logon);
+    const dispatch = useDispatch();
+    const checkAuth = useCallback(() => dispatch(actions.checkAuthStatus()), [dispatch])
+    checkAuth();
     return (
         <Fragment>
             <BrowserRouter>
                 <Layout>
                     <Suspense fallback={<LoadingSpinner/>}>
                         <Switch>
-                            {props.isAuth ?
+                            {isAuth ?
                                 <Route path='/checkout/contact-details' component={ContactDetails}/> : null}
-                            {props.isAuth ? <Route path="/checkout" component={Checkout}/> : null}
-                            {props.isAuth ? <Route path="/orders" component={Orders}/> : null}
+                            {isAuth ? <Route path="/checkout" component={Checkout}/> : null}
+                            {isAuth ? <Route path="/orders" component={Orders}/> : null}
                             <Route path="/auth" component={Auth}/>
                             <Route path='/' component={BurgerBuilder}/>
                         </Switch>
@@ -44,17 +48,4 @@ const App = (props) => {
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        isAuth: state.auth.logon
-    }
-}
-
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        checkAuth: () => dispatch(actions.checkAuthStatus())
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
