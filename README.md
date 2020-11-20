@@ -1,5 +1,5 @@
 # Introduction
-As part of my learning jurney built my first MERN React app.
+As part of my learning journey built my first MERN React app.
 Link:  https://idan2468.github.io/Burger-Builder/
 
 ## Technologies
