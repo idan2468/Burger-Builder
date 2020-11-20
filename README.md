@@ -1,4 +1,4 @@
-In progress...
+As part of my learning jurney built my first MERN React app.
 
 Burger Builder project using React that includes the following:
 
